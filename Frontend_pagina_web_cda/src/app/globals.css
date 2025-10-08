@@ -1,0 +1,48 @@
+/* === Estilos base (Mobile First) === */
+body {
+  background-color: #DFDFDF;
+  margin: 0;
+  color: #043C2A;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* Hasta 480px - móviles */
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+    background-color: #DFDFDF;
+    color: #043C2A;
+  }
+
+}
+
+/* Tablets (481px a 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  
+}
+
+/* Laptops (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+
+  
+}
+
+
+/* Desktop grandes (1025px en adelante) */
+@media (min-width: 1025px) {
+  body {
+    font-size: 18px;
+  }
+
+  
+}

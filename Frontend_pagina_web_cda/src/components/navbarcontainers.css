@@ -1,0 +1,88 @@
+/* Contenedor principal del navbar circular */
+.NavbarContainers {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  overflow-x: auto; /* Scroll horizontal solo en móvil */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+  scrollbar-width: none; /* Oculta scrollbar en Firefox */
+  padding: 10px 0;
+  justify-content: flex-start; /* Default móvil */
+}
+
+.NavbarContainers::-webkit-scrollbar {
+  display: none; /* Oculta scrollbar en Chrome/Safari */
+}
+
+/* Lista interna (quita los puntos) */
+.CircleNavbar {
+  display: flex;
+  gap: 25px; /* Espacio entre círculos en móvil */
+  padding: 0;
+  margin: 0;
+  list-style: none; /* 🔥 Elimina los puntos */
+}
+
+/* Texto debajo de cada imagen */
+.CircleNavbar-text {
+  text-decoration: none;
+  color: #000; /* Ajusta según tu diseño */
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Imágenes circulares */
+.NavbarContainers-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+/* Efecto hover */
+.NavbarContainers-img:hover {
+  transform: scale(1.05);
+  border-color: #006F44; /* Verde corporativo */
+}
+
+/* 📱 Tablets */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .NavbarContainers {
+    justify-content: center; /* Centrado */
+    overflow-x: hidden; /* Quita scroll */
+  }
+  .CircleNavbar {
+    gap: 50px; /* Más espacio entre ítems */
+  }
+  .NavbarContainers-img {
+    width: 100px;
+    height: 100px;
+  }
+  .CircleNavbar-text {
+    font-size: 14px;
+  }
+}
+
+/* 💻 Computadores */
+@media (min-width: 1025px) {
+  .NavbarContainers {
+    justify-content: center; /* Centrado */
+    overflow-x: hidden; /* Quita scroll */
+  }
+  .CircleNavbar {
+    gap: 70px; /* Mucho más separados */
+  }
+  .NavbarContainers-img {
+    width: 120px;
+    height: 120px;
+  }
+  .CircleNavbar-text {
+    font-size: 16px;
+  }
+}
+

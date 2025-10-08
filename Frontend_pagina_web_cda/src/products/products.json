@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Baño compacto",
+    "description": "Contenedor adaptado como baño completo.",
+    "price": 2000,
+    "category": "banos",
+    "image": "/images/banos/banio1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bodega 20 pies",
+    "description": "Contenedor perfecto para almacenamiento seguro.",
+    "price": 2500,
+    "category": "bodegas",
+    "image": "/images/bodegas/bodega1.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Oficina 40 pies",
+    "description": "Oficina modular con espacio amplio y acabados modernos.",
+    "price": 4000,
+    "category": "oficinas",
+    "image": "/images/oficinas/oficina1.jpg"
+  }
+]

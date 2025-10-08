@@ -1,0 +1,266 @@
+/* === Navbar === */
+.navbar {
+  background-color: #006F44;
+  padding: 10px 200px 0px 200px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Acciones (selector de idioma arriba) */
+.navbarActions {
+  align-items: flex-end;
+  font-size: 9px;
+  margin-left: auto;
+}
+
+.languageSelect {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* === Sección superior (logo + búsqueda + iconos) === */
+.navbarTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 0 15px;
+}
+
+.navbarTop img {
+  height: auto;
+  max-height: 60px;   /* control del alto */
+  width: auto;
+  object-fit: contain; /* mantiene proporción */
+}
+
+/* === Barra de búsqueda === */
+.searchBar {
+  display: flex;
+  flex: 1;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  align-items: center;
+  max-width: 350px;
+  transition: max-width 0.3s ease;
+}
+
+.searchBar input {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.searchBar button {
+  padding: 5px 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #777;
+}
+
+/* === CTA (asesoría gratuita) === */
+.mensajeCta {
+  display: flex;
+  align-items: center;
+}
+
+.asesoriaGratuita {
+  background-color: #053D2B;
+  margin: 20px;
+  padding: 7px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  position: absolute;
+  margin-left: -90px;
+}
+
+.textCta {
+  background-color: white;
+  color: #053D2B;
+  text-align: justify;
+  font-size: 13px;
+  width: 180px;
+}
+
+/* === Menú === */
+.navMenu {
+  background-color: #006F44;
+  width: 100%;
+}
+
+.navMenu ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.navMenu ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navMenu ul li a:hover {
+  color: #ddd;
+}
+
+/* === Botón hamburguesa === */
+.menuToggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* ------------------------
+   📱 Responsive
+-------------------------*/
+
+/* Hasta 480px - móviles */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0px;
+  }
+
+  .navbarTop {
+    gap: 10px;
+  }
+
+  .navbarTop img {
+    max-height: 45px;
+  }
+
+  .searchBar {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Botón hamburguesa visible */
+  .menuToggle {
+    display: block;
+  }
+
+  /* Menú oculto por defecto */
+  .navMenu {
+    display: none;
+    flex-direction: column;
+  }
+
+  .navMenu.active {
+    display: flex;
+  }
+
+  .navMenu ul {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+/* Tablets (481px a 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0px;
+  }
+
+  .navbarTop {
+    gap: 12px;
+  }
+
+  .navbarTop img {
+    max-height: 55px;
+  }
+
+  .searchBar {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Menú hamburguesa también aquí */
+  .menuToggle {
+    display: block;
+  }
+
+  .navMenu {
+    display: none;
+    flex-direction: column;
+  }
+
+  .navMenu.active {
+    display: flex;
+  }
+
+  .navMenu ul {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+/* Laptops (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0px;
+  }
+    .navbarTop img {
+    max-height: 65px;
+  }
+
+  .searchBar {
+    max-width: 280px;
+  }
+}
+
+/* CTA oculto en móvil, tablet y laptop */
+@media (max-width: 1024px) {
+  .mensajeCta,
+  .asesoriaGratuita,
+  .textCta {
+    display: none !important;
+  }
+}
+
+
+/* Desktop grandes (1025px en adelante) */
+@media (min-width: 1025px) {
+  .navbarTop img {
+    max-height: 80px;
+  }
+
+  .searchBar {
+    max-width: 350px;
+  }
+
+  /* Menú siempre visible en desktop */
+  .navMenu {
+    display: block !important;
+  }
+
+  .menuToggle {
+    display: none;
+  }
+
+  /* CTA visible solo en desktop */
+  .mensajeCta {
+    display: flex;
+  }
+  .asesoriaGratuita {
+    display: block;
+  }
+}

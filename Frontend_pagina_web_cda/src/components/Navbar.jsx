@@ -46,7 +46,7 @@ export default function Navbar() {
         <form className="searchBar" onSubmit={handleSearch}>
           <input
             type="text"
-            placeholder="Busca contenedores, servicio logístico, mobiliario y más... "
+            placeholder="Busca contenedores, servicio logístico, mobiliario y más..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -54,20 +54,21 @@ export default function Navbar() {
         </form>
 
         {/* Botón hamburguesa */}
-        <button
-          className="menuToggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
+        <button className="menuToggle" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? "✖" : "☰"}
         </button>
-        {/* Mensaje de CTA*/}
-      <div className="mensajeCta">
-        <h4 className="asesoriaGratuita">Asesoría gratis</h4>
-        <h5 className="textCta">El contenedor perfecto par tu proyecto</h5>
-      </div>
-      </div>
 
-      
+        {/* Mensaje de CTA */}
+        <a
+          href="https://wa.me/573158246718?text=Hola!%20Quiero%20más%20información%20sobre%20contenedores."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mensajeCta block cursor-pointer no-underline text-inherit"
+        >
+          <h4 className="asesoriaGratuita">Asesoría gratis</h4>
+          <h5 className="textCta">El contenedor perfecto para tu proyecto</h5>
+        </a>
+      </div>
 
       {/* === Menú desplegable === */}
       <nav className={`navMenu ${menuOpen ? "active" : ""}`}>

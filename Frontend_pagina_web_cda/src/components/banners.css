@@ -1,27 +1,45 @@
+/* === Contenedor general === */
+.bannerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 /* === Slider Banner === */
 .bannerSlider {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   background: #000;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bannerSlider.loading {
+  background: #111;
+  color: #ccc;
+  justify-content: center;
+  font-size: 18px;
 }
 
 .slides {
   display: flex;
-  width: 100%; /* se ajusta según cantidad de imágenes */
-  animation: slide 12s infinite;
+  transition: transform 0.8s ease-in-out;
 }
 
-.slides img {
+.bannerImage {
   width: 100%;
+  height: 350px;
   flex-shrink: 0;
-  object-fit: contain;
-  background-color: #fff;
-  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
-/* === Puntos de navegación === */
+/* === Dots de navegación === */
 .dots {
   position: absolute;
   bottom: 15px;
@@ -38,81 +56,46 @@
   border-radius: 50%;
   display: inline-block;
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: all 0.4s ease;
 }
 
 .dots span.active {
-  background: #00ff88; /* color verde corporativo */
-  width: 20px; /* se hace más largo el activo */
+  background: #00ff88;
+  width: 20px;
   border-radius: 20px;
 }
 
-/* === Franja de texto inferior === */
+/* === Texto inferior === */
 .textoLogistica {
-  width: 90%;
+  margin-top: 12px;
   background-color: #000;
   color: #fff;
   font-size: 18px;
-  padding: 8px 15px;
+  padding: 10px 20px;
   text-align: center;
   font-weight: 500;
-  border-radius: 5px;
+  border-radius: 6px;
+  width: fit-content;
 }
 
-/* Parte del texto en verde */
 .textoLogistica .resaltadoVerde {
-  color: #00FF88;
+  color: #00ff88;
   font-weight: bold;
 }
 
-/* === Animación automática del slider === */
-@keyframes slide {
-  0%   { transform: translateX(0%); }
-  30%  { transform: translateX(0%); }
-  33%  { transform: translateX(-100%); }
-  63%  { transform: translateX(-100%); }
-  66%  { transform: translateX(-200%); }
-  96%  { transform: translateX(-200%); }
-  100% { transform: translateX(0%); }
-}
-
-/* 📱 Responsive */
-@media (max-width: 480px) {
+/* === Responsive === */
+@media (max-width: 768px) {
   .bannerSlider {
-     max-width: 95%;
-     margin: 10px auto;
-     border-radius: 10px;
-    }
-
-  .slides img {
-    height: 200px;
+    height: 220px;
   }
+
+  .bannerImage {
+    height: 220px;
+  }
+
   .textoLogistica {
     font-size: 14px;
-    padding: 5px 8px;
-  }
-
-  
-}
-
-@media (min-width: 481px) and (max-width: 1024px) {
-
-.bannerSlider {
-     max-width: 95%;
-     margin: 10px auto;
-     border-radius: 10px;
-    }
-
-  .slides img {
-    height: 300px;
-  }
-  .textoLogistica {
-    font-size: 16px;
+    padding: 8px;
   }
 }
 
-@media (min-width: 1025px) {
-  .slides img {
-    height: 300px;
-  }
-}

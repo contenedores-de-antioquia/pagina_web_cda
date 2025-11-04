@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_of_projects",
+  "info": {
+    "singularName": "category-of-project",
+    "pluralName": "category-of-projects",
+    "displayName": " categoryProject"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "projectCategoryName": {
+      "type": "string"
+    },
+    "proyecName": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::proyect.proyect",
+      "inversedBy": "category_projects"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "projectCategoryName"
+    }
+  }
+}

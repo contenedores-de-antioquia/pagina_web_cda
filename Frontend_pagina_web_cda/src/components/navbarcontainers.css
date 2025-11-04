@@ -1,88 +1,135 @@
-/* Contenedor principal del navbar circular */
+/* === NAVBAR CONTAINERS - DESLIZABLE SIN SCROLLBAR === */
+
 .NavbarContainers {
+  width: 100%;
+  overflow: hidden; /* Oculta el scroll */
+  background-color: #fff;
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+  padding: 2rem 0;
   display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: center;
-  overflow-x: auto; /* Scroll horizontal solo en móvil */
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-  scrollbar-width: none; /* Oculta scrollbar en Firefox */
-  padding: 10px 0;
-  justify-content: flex-start; /* Default móvil */
 }
 
-.NavbarContainers::-webkit-scrollbar {
-  display: none; /* Oculta scrollbar en Chrome/Safari */
-}
-
-/* Lista interna (quita los puntos) */
+/* Carrusel horizontal */
 .CircleNavbar {
   display: flex;
-  gap: 25px; /* Espacio entre círculos en móvil */
-  padding: 0;
+  flex-wrap: nowrap;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0 2rem;
   margin: 0;
-  list-style: none; /* 🔥 Elimina los puntos */
+  cursor: grab;
+  transition: transform 0.3s ease;
+  scroll-behavior: smooth;
+  user-select: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Oculta scroll en Firefox */
 }
 
-/* Texto debajo de cada imagen */
-.CircleNavbar-text {
+.CircleNavbar::-webkit-scrollbar {
+  display: none; /* Oculta scroll en Chrome/Safari */
+}
+
+.CircleNavbar:active {
+  cursor: grabbing;
+}
+
+.CircleNavbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.CircleNavbar-link {
   text-decoration: none;
-  color: #000; /* Ajusta según tu diseño */
-  font-size: 12px;
-  margin-top: 5px;
-  display: block;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
 }
 
-/* Imágenes circulares */
-.NavbarContainers-img {
-  width: 70px;
-  height: 70px;
+.CircleNavbar-img-container {
+  width: 100px; /* 🔹 Tamaño reducido */
+  height: 100px;
   border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #87C69A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.NavbarContainers-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border: 2px solid #e0e0e0;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  cursor: pointer;
+  transition: transform 0.4s ease;
 }
 
-/* Efecto hover */
-.NavbarContainers-img:hover {
-  transform: scale(1.05);
-  border-color: #006F44; /* Verde corporativo */
+/* Hover */
+.CircleNavbar-link:hover .NavbarContainers-img {
+  transform: scale(1.1);
 }
 
-/* 📱 Tablets */
-@media (min-width: 481px) and (max-width: 1024px) {
-  .NavbarContainers {
-    justify-content: center; /* Centrado */
-    overflow-x: hidden; /* Quita scroll */
+.CircleNavbar-link:hover .CircleNavbar-img-container {
+  border-color: #198754;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.CircleNavbar-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #212529;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+/* Estado de carga y vacío */
+.NavbarContainers-loading,
+.NavbarContainers-empty {
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  padding: 3rem 0;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .CircleNavbar-img-container {
+    width: 85px; /* 🔹 Más pequeño en tablets */
+    height: 85px;
   }
-  .CircleNavbar {
-    gap: 50px; /* Más espacio entre ítems */
-  }
-  .NavbarContainers-img {
-    width: 100px;
-    height: 100px;
-  }
+
   .CircleNavbar-text {
-    font-size: 14px;
+    font-size: 0.85rem;
+  }
+
+  .CircleNavbar {
+    gap: 1.25rem;
   }
 }
 
-/* 💻 Computadores */
-@media (min-width: 1025px) {
-  .NavbarContainers {
-    justify-content: center; /* Centrado */
-    overflow-x: hidden; /* Quita scroll */
+@media (max-width: 480px) {
+  .CircleNavbar-img-container {
+    width: 70px; /* 🔹 Más pequeño en móviles */
+    height: 70px;
   }
-  .CircleNavbar {
-    gap: 70px; /* Mucho más separados */
-  }
-  .NavbarContainers-img {
-    width: 120px;
-    height: 120px;
-  }
+
   .CircleNavbar-text {
-    font-size: 16px;
+    font-size: 0.8rem;
+  }
+
+  .CircleNavbar {
+    gap: 1rem;
   }
 }
+
 

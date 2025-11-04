@@ -467,36 +467,62 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCategoryContainerCategoryContainer
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'category_containers';
+export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
+  collectionName: 'banners';
   info: {
-    displayName: 'categoryContainer';
-    pluralName: 'category-containers';
-    singularName: 'category-container';
+    displayName: 'banner';
+    pluralName: 'banners';
+    singularName: 'banner';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    containerSize: Schema.Attribute.Enumeration<
-      [
-        'Contenedor 10 pies',
-        'Contenedor 20 pies',
-        'Contenedor 40 pies',
-        'Contenedor 40 pies Higth Cube',
-      ]
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
     >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::banner.banner'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryOfProjectCategoryOfProject
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_of_projects';
+  info: {
+    displayName: ' categoryProject';
+    pluralName: 'category-of-projects';
+    singularName: 'category-of-project';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::category-container.category-container'
+      'api::category-of-project.category-of-project'
     > &
       Schema.Attribute.Private;
+    projectCategoryName: Schema.Attribute.String;
+    proyecName: Schema.Attribute.Relation<'manyToOne', 'api::proyect.proyect'>;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'projectCategoryName'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -533,6 +559,36 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContainerCategoryContainerCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'container_categories';
+  info: {
+    displayName: 'containerCategory';
+    pluralName: 'container-categories';
+    singularName: 'container-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::container-category.container-category'
+    > &
+      Schema.Attribute.Private;
+    nameCategoryContainers: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nameCategoryContainers'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -544,14 +600,26 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    airConditioning: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
-    category_container: Schema.Attribute.Relation<
+    container_category: Schema.Attribute.Relation<
       'oneToOne',
-      'api::category-container.category-container'
+      'api::container-category.container-category'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    doors: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    electricalNetwork: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    imageMeasurements: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    lightning: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -563,8 +631,68 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       true
     > &
       Schema.Attribute.Required;
+    newOrUsed: Schema.Attribute.Enumeration<
+      ['Contenedor nuevo', 'Contenedor usado']
+    >;
+    numberOfWindows: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    outlet: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     productName: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    rentalValue: Schema.Attribute.Decimal;
+    saleValue: Schema.Attribute.Decimal;
+    slug: Schema.Attribute.UID<'productName'>;
+    switch: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    typeOfCoating: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    typeOfFinish: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    typeOfFloor: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    voiceAndData: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+  };
+}
+
+export interface ApiProyectProyect extends Struct.CollectionTypeSchema {
+  collectionName: 'proyects';
+  info: {
+    displayName: 'project';
+    pluralName: 'proyects';
+    singularName: 'proyect';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category_projects: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-of-project.category-of-project'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::proyect.proyect'
+    > &
+      Schema.Attribute.Private;
+    projectDescription: Schema.Attribute.Text;
+    projectImages: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    projectName: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1082,9 +1210,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::category-container.category-container': ApiCategoryContainerCategoryContainer;
+      'api::banner.banner': ApiBannerBanner;
+      'api::category-of-project.category-of-project': ApiCategoryOfProjectCategoryOfProject;
       'api::category.category': ApiCategoryCategory;
+      'api::container-category.container-category': ApiContainerCategoryContainerCategory;
       'api::product.product': ApiProductProduct;
+      'api::proyect.proyect': ApiProyectProyect;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

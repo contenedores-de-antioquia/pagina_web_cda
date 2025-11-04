@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "container_categories",
+  "info": {
+    "singularName": "container-category",
+    "pluralName": "container-categories",
+    "displayName": "containerCategory"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nameCategoryContainers": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nameCategoryContainers"
+    }
+  }
+}

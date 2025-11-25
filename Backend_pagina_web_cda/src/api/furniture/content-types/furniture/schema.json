@@ -1,0 +1,102 @@
+{
+  "kind": "collectionType",
+  "collectionName": "furnitures",
+  "info": {
+    "singularName": "furniture",
+    "pluralName": "furnitures",
+    "displayName": "furniture"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fornitureName": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "fornitureName"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "rent": {
+      "type": "enumeration",
+      "default": "No disponible para alquiler",
+      "enum": [
+        "rent:",
+        "No disponible para alquiler",
+        "Disponible para alquiler"
+      ]
+    },
+    "saleValue": {
+      "type": "decimal"
+    },
+    "description": {
+      "type": "text"
+    },
+    "height": {
+      "type": "decimal"
+    },
+    "long": {
+      "type": "decimal"
+    },
+    "width": {
+      "type": "decimal"
+    },
+    "material01": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "material02": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "material03": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "material04": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "furnitures"
+    }
+  }
+}

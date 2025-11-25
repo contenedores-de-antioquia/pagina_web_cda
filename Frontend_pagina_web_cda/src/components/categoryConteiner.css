@@ -1,0 +1,22 @@
+.containersCategory {
+    display: flex;
+    justify-content: center; /* centra los elementos horizontalmente */
+    margin: 0;
+    margin-top: -2px;
+    background-color: rgb(255, 255, 255);
+}
+
+.nameCategory{
+    
+}
+
+.subCategory {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  justify-content: center; /* centra los elementos horizontalmente */
+  padding: 0;
+  margin: 20px 0;
+}
+
+

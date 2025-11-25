@@ -1,0 +1,85 @@
+"use client";
+import React, { useEffect, useState } from "react";
+
+const ProductsList = ({ categorySlug }) => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const endpoints = [
+          `/api/projects?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+          `/api/products?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+          `/api/furnitures?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+        ];
+
+        let allData = [];
+
+        for (const endpoint of endpoints) {
+          const res = await fetch(`http://localhost:1337${endpoint}`);
+          const json = await res.json();
+
+          if (json.data && json.data.length > 0) {
+            const mapped = json.data.map((item) => {
+              const attrs = item; // Strapi en tu caso no usa attributes
+
+              return {
+                id: item.id,
+                name:
+                  attrs.projectName ||
+                  attrs.productName ||
+                  attrs.fornitureName ||
+                  "Sin nombre",
+
+                description:
+                  attrs.projectDescription ||
+                  attrs.description ||
+                  "",
+
+                // 👇 AQUI EL ARREGLO REAL
+                images: attrs.projectImages || [],
+
+                slug: attrs.slug,
+                type: attrs.projectName
+                  ? "project"
+                  : attrs.productName
+                  ? "product"
+                  : "furniture",
+              };
+            });
+
+            allData = [...allData, ...mapped];
+          }
+        }
+
+        setItems(allData);
+      } catch (e) {
+        console.error("❌ Fetch error:", e);
+      }
+    };
+
+    fetchData();
+  }, [categorySlug]);
+
+  return (
+    <div>
+      <h2>Resultados para categoría: {categorySlug}</h2>
+
+      {items.map((i) => (
+        <div key={i.id} style={{ padding: 20, borderBottom: "1px solid #ddd" }}>
+          <h3>{i.name}</h3>
+          <p>{i.description}</p>
+
+          {i.images.length > 0 && (
+            <img
+              src={`http://localhost:1337${i.images[0].url}`}
+              width={200}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default ProductsList;

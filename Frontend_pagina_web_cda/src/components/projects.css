@@ -1,0 +1,115 @@
+.project-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-slide {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.project-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.5s ease;
+}
+
+.project-slide:hover .project-image {
+  transform: scale(1.02);
+}
+
+/* Botones de navegación */
+.nav-button {
+  background: rgba(4, 60, 42, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s ease;
+  z-index: 10;
+}
+
+.nav-button:hover {
+  background: #086849;
+}
+
+.nav-button.left {
+  left: -60px;
+}
+
+.nav-button.right {
+  right: -60px;
+}
+
+/* Botón de información */
+.info-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: #043c2a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.info-button:hover {
+  background: #086849;
+}
+
+/* Card con la información del proyecto */
+.info-card {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 20px;
+  animation: fadeIn 0.3s ease forwards;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  color: #043c2a;
+}
+
+.info-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

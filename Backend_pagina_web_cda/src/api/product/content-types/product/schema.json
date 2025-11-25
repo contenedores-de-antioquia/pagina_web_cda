@@ -19,14 +19,7 @@
       "type": "uid",
       "targetField": "productName"
     },
-    "newOrUsed": {
-      "type": "enumeration",
-      "enum": [
-        "Contenedor nuevo",
-        "Contenedor usado"
-      ]
-    },
-    "mainImage": {
+    "images": {
       "type": "media",
       "multiple": true,
       "required": true,
@@ -37,16 +30,6 @@
         "audios"
       ]
     },
-    "category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::category.category"
-    },
-    "container_category": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::container-category.container-category"
-    },
     "saleValue": {
       "type": "decimal"
     },
@@ -56,6 +39,13 @@
     "active": {
       "type": "boolean",
       "default": true
+    },
+    "newOrUsed": {
+      "type": "enumeration",
+      "enum": [
+        "Contenedor nuevo",
+        "Contenedor usado"
+      ]
     },
     "imageMeasurements": {
       "type": "media",
@@ -176,6 +166,18 @@
         "videos",
         "audios"
       ]
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
+    "container_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::container-category.container-category",
+      "mappedBy": "products"
     }
   }
 }

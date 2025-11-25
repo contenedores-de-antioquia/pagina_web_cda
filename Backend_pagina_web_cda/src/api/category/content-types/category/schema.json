@@ -27,6 +27,29 @@
     "slug": {
       "type": "uid",
       "targetField": "categoryName"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "categories"
+    },
+    "container_categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::container-category.container-category"
+    },
+    "furnitures": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::furniture.furniture",
+      "inversedBy": "categories"
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "inversedBy": "categories"
     }
   }
 }

@@ -1,0 +1,230 @@
+/* ================================
+   🟩 GRID DE PRODUCTOS
+================================ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+  padding: 15px;
+}
+
+/* ================================
+   🟩 CARD PADRE
+================================ */
+.product-card {
+  display: flex;
+  flex-direction: row;
+  margin: 8px;
+  background-color: white;
+  border-radius: 25px;
+  overflow: hidden; /* Hace que la imagen respete el borde */
+  transition: all 0.3s ease; /* Suaviza hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Difuminado suave */
+  text-decoration: none; /* Para que no se subraye el enlace */
+}
+
+/* Hover */
+.product-card:hover {
+  border: 1.5px solid #006D40; /* Borde verde */
+  transform: translateY(-4px); /* Elevación */
+  cursor: pointer;
+}
+
+/* ================================
+   🟩 IMAGEN DEL PRODUCTO
+================================ */
+.product-image {
+  width: 45%;
+  background-color: #ffffff;
+  position: relative;
+  aspect-ratio: 1 / 1; /* Hace la imagen cuadrada */
+  min-height: 280px; /* Altura mínima consistente */
+  flex-shrink: 0; /* Evita que se reduzca */
+  overflow: hidden; /* Evita que la imagen se salga */
+  border-radius: 25px 0 0 25px; /* Mantiene el borde redondeado */
+}
+
+/* Ajustes base de imagen */
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta sin deformar */
+  display: block;
+}
+
+/* ================================
+   🟩 INFORMACIÓN DEL PRODUCTO
+================================ */
+.product-info {
+  width: 55%;
+  padding: 15px 20px;
+  color: #006D40;
+}
+
+.product-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #003B29;
+  line-height: 1.1;
+}
+
+.product-tag {
+  font-size: 1rem;
+  font-weight: 520;
+  color: #003B29;
+  margin-top: -5px;
+}
+
+/* ================================
+   🟩 SECCIÓN DE VENTA Y ALQUILER
+================================ */
+.product-sale,
+.product-rent {
+  margin-top: 30px;
+  line-height: 0.4;
+}
+
+.product-label {
+  font-size: 1rem;
+  font-weight: 560;
+  color: #006D40;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #006D40;
+}
+
+.product-tax {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #006D40;
+}
+
+/* ================================
+   🟩 BOTONES
+================================ */
+.product-btn {
+  color: white;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  background-color: #003B29;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-btn:hover {
+  background-color: #006D40;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 109, 64, 0.3);
+}
+
+.product-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 59, 41, 0.4);
+}
+
+/* ================================
+   🟩 LOGÍSTICA
+================================ */
+.product-logistics {
+  margin-top: 25px;
+}
+
+.logistics-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #006D40;
+  line-height: 1.1;
+}
+
+/* ================================
+   🟩 RESPONSIVE
+================================ */
+@media (max-width: 850px) {
+  .product-card {
+    flex-direction: column;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 220px;
+  }
+
+  .product-info {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+   🟩 SLIDER DE IMÁGENES (AGREGADO, NO MODIFICA NADA TUYO)
+========================================================== */
+
+/* Contenedor del slider con tamaño cuadrado */
+.product-image {
+  position: relative;
+  width: 45%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* Wrapper de todas las imágenes en fila */
+.image-slider {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Cada slide */
+.image-slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+/* Imagen dentro del slide */
+.image-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Flechas */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 59, 41, 0.7);
+  border: none;
+  color: white;
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+  transition: 0.2s ease;
+}
+
+.slider-btn:hover {
+  background: rgba(0, 109, 64, 0.8);
+}
+
+.slider-btn.prev {
+  left: 10px;
+}
+
+.slider-btn.next {
+  right: 10px;
+}
+
+/* Responsive para slider */
+@media (max-width: 850px) {
+  .product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+}

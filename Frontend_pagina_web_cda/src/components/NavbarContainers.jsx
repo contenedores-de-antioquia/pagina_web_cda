@@ -45,7 +45,8 @@ export default function NavbarContainers() {
 
           return (
             <li key={cat.id} className="CircleNavbar-item">
-              <Link href={`/containers/categories/${slug}`} className="CircleNavbar-link">
+              {/* 🔥 Ruta actualizada */}
+              <Link href={`/categories/${slug}`} className="CircleNavbar-link">
                 <div className="CircleNavbar-img-container">
                   <img
                     className="NavbarContainers-img"
@@ -62,5 +63,3 @@ export default function NavbarContainers() {
     </nav>
   );
 }
-
-

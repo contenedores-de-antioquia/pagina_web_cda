@@ -14,12 +14,6 @@
     "projectCategoryName": {
       "type": "string"
     },
-    "proyecName": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::proyect.proyect",
-      "inversedBy": "category_projects"
-    },
     "slug": {
       "type": "uid",
       "targetField": "projectCategoryName"

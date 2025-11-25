@@ -520,7 +520,6 @@ export interface ApiCategoryOfProjectCategoryOfProject
     > &
       Schema.Attribute.Private;
     projectCategoryName: Schema.Attribute.String;
-    proyecName: Schema.Attribute.Relation<'manyToOne', 'api::proyect.proyect'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'projectCategoryName'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -541,9 +540,17 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
   attributes: {
     categoryName: Schema.Attribute.String;
+    container_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::container-category.container-category'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    furnitures: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::furniture.furniture'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -551,6 +558,8 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     mainImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'categoryName'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -571,9 +580,16 @@ export interface ApiContainerCategoryContainerCategory
     draftAndPublish: true;
   };
   attributes: {
+    categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    imgContainerCategory: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -581,11 +597,71 @@ export interface ApiContainerCategoryContainerCategory
     > &
       Schema.Attribute.Private;
     nameCategoryContainers: Schema.Attribute.String;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'nameCategoryContainers'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFurnitureFurniture extends Struct.CollectionTypeSchema {
+  collectionName: 'furnitures';
+  info: {
+    displayName: 'furniture';
+    pluralName: 'furnitures';
+    singularName: 'furniture';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::category.category'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    fornitureName: Schema.Attribute.String;
+    height: Schema.Attribute.Decimal;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::furniture.furniture'
+    > &
+      Schema.Attribute.Private;
+    long: Schema.Attribute.Decimal;
+    material01: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    material02: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    material03: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    material04: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    rent: Schema.Attribute.Enumeration<
+      ['rent:', 'No disponible para alquiler', 'Disponible para alquiler']
+    > &
+      Schema.Attribute.DefaultTo<'No disponible para alquiler'>;
+    saleValue: Schema.Attribute.Decimal;
+    slug: Schema.Attribute.UID<'fornitureName'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    width: Schema.Attribute.Decimal;
   };
 }
 
@@ -604,9 +680,12 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     airConditioning: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
-    category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
-    container_category: Schema.Attribute.Relation<
-      'oneToOne',
+    categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::category.category'
+    >;
+    container_categories: Schema.Attribute.Relation<
+      'manyToMany',
       'api::container-category.container-category'
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -619,6 +698,11 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     imageMeasurements: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    > &
+      Schema.Attribute.Required;
     lightning: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -626,11 +710,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product.product'
     > &
       Schema.Attribute.Private;
-    mainImage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
     newOrUsed: Schema.Attribute.Enumeration<
       ['Contenedor nuevo', 'Contenedor usado']
     >;
@@ -662,20 +741,20 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiProyectProyect extends Struct.CollectionTypeSchema {
-  collectionName: 'proyects';
+export interface ApiProjectProject extends Struct.CollectionTypeSchema {
+  collectionName: 'projects';
   info: {
     displayName: 'project';
-    pluralName: 'proyects';
-    singularName: 'proyect';
+    pluralName: 'projects';
+    singularName: 'project';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    category_projects: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category-of-project.category-of-project'
+    categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::category.category'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -683,16 +762,17 @@ export interface ApiProyectProyect extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::proyect.proyect'
+      'api::project.project'
     > &
       Schema.Attribute.Private;
     projectDescription: Schema.Attribute.Text;
     projectImages: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
+      'images' | 'files' | 'videos' | 'audios',
+      true
     >;
     projectName: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID;
+    slug: Schema.Attribute.UID<'projectName'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1214,8 +1294,9 @@ declare module '@strapi/strapi' {
       'api::category-of-project.category-of-project': ApiCategoryOfProjectCategoryOfProject;
       'api::category.category': ApiCategoryCategory;
       'api::container-category.container-category': ApiContainerCategoryContainerCategory;
+      'api::furniture.furniture': ApiFurnitureFurniture;
       'api::product.product': ApiProductProduct;
-      'api::proyect.proyect': ApiProyectProyect;
+      'api::project.project': ApiProjectProject;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

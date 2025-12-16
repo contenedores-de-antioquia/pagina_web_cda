@@ -3,10 +3,43 @@ body {
   background-color: #DFDFDF;
   margin: 0;
   color: #043C2A;
-  font-family: Arial, sans-serif;
+  font-family: "Folks", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
 }
+
+/* LIGHT */
+@font-face {
+  font-family: "Folks";
+  src: url("/fonts/Folks-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* REGULAR */
+@font-face {
+  font-family: "Folks";
+  src: url("/fonts/Folks-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* NORMAL */
+@font-face {
+  font-family: "Folks";
+  src: url("/fonts/Folks-Normal.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* BOLD */
+@font-face {
+  font-family: "Folks";
+  src: url("/fonts/Folks-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
 
 
 /* Hasta 480px - móviles */

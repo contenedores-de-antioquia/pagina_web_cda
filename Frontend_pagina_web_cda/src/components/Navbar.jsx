@@ -2,96 +2,138 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import "./navbar.css";
 
 export default function Navbar() {
+  const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [language, setLanguage] = useState("es");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      console.log("Buscando:", query);
-    }
-  };
+  // ⚡ Menú memorizado para no recrearlo en cada render
+  const menuLinks = useMemo(
+    () => [
+      { href: "/", label: "Inicio" },
+      { href: "/containers/categories/bodegas", label: "Diseños estándar" },
+      { href: "/proyects", label: "Proyectos" },
+      { href: "/mobiliario/puesto-de-trabajo", label: "Mobiliario" },
+      { href: "/blog", label: "Blog" },
+    ],
+    []
+  );
+
+  // ⚡ Scroll optimizado
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // ⚡ Callbacks memorizados
+  const toggleSearch = useCallback(() => {
+    setSearchOpen((prev) => !prev);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
+
+  const handleSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (query.trim()) console.log("Buscando:", query);
+    },
+    [query]
+  );
 
   return (
-    <header className="navbar">
-      {/* === Acciones (idioma arriba a la derecha) === */}
-      <div className="navbarActions">
-        <select
-          className="languageSelect"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option value="es">Español</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-
-      {/* === Sección superior === */}
+    <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbarTop">
-        {/* Logo */}
-        <Image
-          src="/img/Versión-vertical-Contenedores-de-Antioquia.png"
-          alt="Logo Contenedores de Antioquia"
-          width={100}
-          height={60}
-          priority
-        />
 
-        {/* Barra de búsqueda */}
-        <form className="searchBar" onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Busca contenedores, servicio logístico, mobiliario y más..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+        {/* LOGO (optimizado con priority solo en desktop) */}
+        <div className="leftGroup">
+          <Image
+            src="/img/Versión-horizontal-Contenedores-de-Antioquia.png"
+            alt="Logo Contenedores de Antioquia"
+            width={180}
+            height={80}
+            className="logoDesktop"
+            priority
           />
-          <button type="submit">🔍</button>
-        </form>
+          <Image
+            src="/img/Versión-vertical-Contenedores-de-Antioquia.png"
+            alt="Logo Contenedores de Antioquia"
+            width={70}
+            height={70}
+            className="logoMobile"
+          />
+        </div>
 
-        {/* Botón hamburguesa */}
-        <button className="menuToggle" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? "✖" : "☰"}
+        {/* MENÚ */}
+        <nav className={`navMenu ${menuOpen ? "active" : ""}`}>
+          <ul>
+            {menuLinks.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* LUPA */}
+        <button className="searchIcon" onClick={toggleSearch}>
+          <Image
+            src="/img/Lupa-Blanca.png"
+            alt="Buscar"
+            width={18}
+            height={20}
+          />
         </button>
 
-        {/* Mensaje de CTA */}
+        {/* CTA */}
         <a
-          href="https://wa.me/573158246718?text=Hola!%20Quiero%20más%20información%20sobre%20contenedores."
+          href="https://wa.me/573158246718?text=Hola!%20Quiero%20más%20información."
           target="_blank"
           rel="noopener noreferrer"
-          className="mensajeCta block cursor-pointer no-underline text-inherit"
+          className="mensajeCta no-underline text-inherit"
         >
           <h4 className="asesoriaGratuita">Asesoría gratis</h4>
           <h5 className="textCta">El contenedor perfecto para tu proyecto</h5>
         </a>
+
+        {/* IDIOMA */}
+        <select
+          className="languageSelectNavbar"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
+
+        {/* HAMBURGUESA */}
+        <button className="menuToggle" onClick={toggleMenu}>
+          {menuOpen ? "✖" : "☰"}
+        </button>
+
       </div>
 
-      {/* === Menú desplegable === */}
-      <nav className={`navMenu ${menuOpen ? "active" : ""}`}>
-        <ul>
-          <li>
-            <Link href="/">Inicio</Link>
-          </li>
-          <li>
-            <Link href="/containers/categories/bodegas">
-              Contenedores diseños estándar
-            </Link>
-          </li>
-          <li>
-            <Link href="/proyects">Contenedores proyectos</Link>
-          </li>
-          <li>
-            <Link href="/mobiliario/puesto-de-trabajo">Mobiliario</Link>
-          </li>
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li>
-        </ul>
-      </nav>
+      {/* BUSCADOR */}
+      {searchOpen && (
+        <form className="searchBarExpanded" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button type="submit">Buscar</button>
+        </form>
+      )}
+
     </header>
   );
 }

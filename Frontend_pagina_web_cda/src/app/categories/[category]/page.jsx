@@ -1,15 +1,33 @@
 "use client";
 
-import React from "react";
-import ProductsList from "@/components/productsList";
+import React, { use } from "react";
+import CategoryContainers from "@/components/CategoryConteiner";
+import ProductsList from "@/components/ProductsList";
 
 export default function CategoryPage({ params }) {
-  const { category } = React.use(params);
+  // ⬇️ params AHORA ES UNA PROMESA → DEBE IR ENVUELTO CON use()
+  const p = use(params);
+  const { category } = p;
+
+  // Categorías que NO deben mostrar contenedores
+  const hiddenCategories = ["proyectos", "mobiliario"];
+
+  const showCategoryContainers = !hiddenCategories.includes(category);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1> {category}</h1>
-      <ProductsList categorySlug={category} />
+    <div style={{ padding: 10 }}>
+      {/* Mostrar subcategorías SOLO en bodegas / oficinas / container categories */}
+      {showCategoryContainers && (
+        <CategoryContainers 
+          category={category}
+          slug={category}
+        />
+      )}
+
+      {/* Mostrar productos bajo la categoría principal */}
+      <ProductsList 
+        categorySlug={category}
+      />
     </div>
   );
 }

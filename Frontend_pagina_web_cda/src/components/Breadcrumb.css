@@ -1,3 +1,51 @@
-.px-6 py-3 text-sm text-gray-600 {
-    background-color: white;
+/* Contenedor general */
+.breadcrumb-container {
+  background: #ffffff;
+  padding: 12px 20px 0px 350px;
+  display: flex;
+  justify-content: flex-start; /* Web: igual */
+  align-items: center;
+  font-size: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+/* Estilo base de los enlaces */
+.breadcrumb-link {
+  color: #505050; /* Gris */
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+/* Elemento activo (último del breadcrumb) */
+.breadcrumb-active {
+  color: #198754; /* Verde */
+  font-weight: 600;
+}
+
+/* Separador "/" */
+.breadcrumb-separator {
+  margin: 0 5px;
+  color: #999; /* Gris claro */
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  .breadcrumb-container {
+    padding: 12px 20px; /* quitar el padding grande izquierdo */
+    justify-content: flex-start; /* A la izquierda */
+  }
+}
+
+/* 📲 TABLET */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .breadcrumb-container {
+    padding: 12px 30px; 
+    justify-content: flex-start; /* A la izquierda */
+  }
+}
+

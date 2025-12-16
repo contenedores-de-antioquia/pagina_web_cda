@@ -1,14 +1,12 @@
 import NavbarContainer from "@/components/NavbarContainers";
-import { title } from "process";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function ContainersLayout({ children }) {
   return (
     <>
+      <Breadcrumb />
       <NavbarContainer />
       {children}
-      
     </>
-    
-    
   );
 }

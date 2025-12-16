@@ -1,163 +1,268 @@
-"use client";
-import React, { useEffect, useState } from "react";
+"use client"; 
 
-const ProductsList = ({ categorySlug }) => {
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import "./productsList.css";
+
+const BASE_URL = "http://localhost:1337";
+
+export default function ProductsList({ categorySlug, subCategorySlug }) {
   const [items, setItems] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const endpoints = [
-          `/api/projects?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
-          `/api/products?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
-          `/api/furnitures?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
-        ];
+    const handleEsc = (e) => e.key === "Escape" && setSelectedProject(null);
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
-        let allData = [];
+  const normalizeImage = (img) =>
+    img ? (img.startsWith("http") ? img : `${BASE_URL}${img}`) : null;
 
-        for (const endpoint of endpoints) {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}${endpoint}`);
-          const json = await res.json();
-          if (!json.data || json.data.length === 0) continue;
+  const mapData = (data) =>
+    data.map((item) => {
+      const a = item.attributes || item;
 
-          const mapped = json.data.map((entry) => {
-            const attrs = entry;
+      let img =
+        a.projectImages?.[0]?.url ||
+        a.images?.[0]?.url ||
+        null;
 
-            let type = "";
-            let name = "";
-            let description = "";
-            let sale = null;
-            let rent = null;
-            let images = [];
+      img = normalizeImage(img);
 
-            // 🔵 Identificación según campos reales
-            if (attrs.productName) type = "products";
-            else if (attrs.projectName) type = "projects";
-            else type = "furniture";
+      return {
+        id: item.id,
+        name: a.projectName || a.productName || a.fornitureName,
+        description: a.projectDescription || a.description || "",
+        slug: a.slug,
+        type: a.projectName
+          ? "project"
+          : a.productName
+          ? "product"
+          : "furniture",
+        imageUrl: img,
+        gallery: a.projectImages?.map((g) => normalizeImage(g.url)) || [],
+        saleValue: a.saleValue,
+        rentalValue: a.rentalValue,
 
-            // ---------- PRODUCTOS ----------
-            if (type === "products") {
-              name = attrs.productName;
-              sale = attrs.saleValue;
-              rent = attrs.rentalValue;
+        /* ⭐ CORREGIDO — AHORA FUNCIONA ⭐ */
+        subCategory:
+          a.container_categories?.data?.[0]?.attributes?.nameCategoryContainers || null,
 
-              if (attrs.images && Array.isArray(attrs.images)) {
-                images = attrs.images.map((img) => {
-                  return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.url}`;
-                });
-              }
+        newOrUsed: a.newOrUsed || null,
+      };
+    });
 
-              if (attrs.imageMeasurements?.url) {
-                images.push(
-                  `${process.env.NEXT_PUBLIC_STRAPI_URL}${attrs.imageMeasurements.url}`
-                );
-              }
-            }
+  const fetchAll = useCallback(async () => {
+    try {
+      const endpoints = [
+        `/api/products?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+        `/api/projects?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+        `/api/furnitures?populate=*&filters[categories][slug][$eq]=${categorySlug}`,
+      ];
 
-            // ---------- FURNITURE ----------
-            if (type === "furniture") {
-              name = attrs.fornitureName;
-              sale = attrs.saleValue;
-              rent = attrs.rent;
-
-              if (attrs.images && Array.isArray(attrs.images)) {
-                images = attrs.images.map((img) => {
-                  return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.url}`;
-                });
-              }
-            }
-
-            // ---------- PROJECTS ----------
-            if (type === "projects") {
-              name = attrs.projectName;
-              description = attrs.projectDescription;
-
-              if (attrs.projectImages && Array.isArray(attrs.projectImages)) {
-                images = attrs.projectImages.map((img) => {
-                  return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.url}`;
-                });
-              }
-            }
-
-            return {
-              id: entry.id,
-              slug: attrs.slug,
-              type,
-              name,
-              description,
-              sale,
-              rent,
-              images,
-            };
-          });
-
-          allData = [...allData, ...mapped];
-        }
-
-        setItems(allData);
-      } catch (error) {
-        console.error("❌ Fetch error:", error);
+      if (subCategorySlug) {
+        endpoints[0] += `&filters[container_categories][slug][$eq]=${subCategorySlug}`;
       }
-    };
 
-    fetchData();
-  }, [categorySlug]);
+      const responses = await Promise.all(
+        endpoints.map((url) =>
+          fetch(`${BASE_URL}${url}`).then((r) => r.json())
+        )
+      );
+
+      let merged = [];
+      responses.forEach((res) => {
+        if (res?.data) merged.push(...mapData(res.data));
+      });
+
+      setItems(merged);
+    } catch (err) {
+      console.log("❌ Error cargando items", err);
+    }
+  }, [categorySlug, subCategorySlug]);
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
+
+  const projectItems = useMemo(
+    () => items.filter((i) => i.type === "project"),
+    [items]
+  );
+
+  const goNext = () => {
+    const i = projectItems.findIndex((p) => p.id === selectedProject.id);
+    setSelectedProject(projectItems[(i + 1) % projectItems.length]);
+  };
+
+  const goPrev = () => {
+    const i = projectItems.findIndex((p) => p.id === selectedProject.id);
+    setSelectedProject(
+      projectItems[(i - 1 + projectItems.length) % projectItems.length]
+    );
+  };
 
   return (
-    <div>
-      <h2>Resultados para: {categorySlug}</h2>
+    <>
+      <div className="projects-carousel-wrapper">
+        <button
+          className="carousel-btn carousel-left"
+          onClick={() =>
+            document
+              .querySelector(".projects-row")
+              ?.scrollBy({ left: -400, behavior: "smooth" })
+          }
+        >
+          ‹
+        </button>
 
-      {items.map((item) => (
-        <div key={item.id} style={{ padding: 20, borderBottom: "1px solid #ddd" }}>
-          <h3>{item.name}</h3>
-
-          {item.description && <p>{item.description}</p>}
-
-          {item.sale && <p><strong>Venta:</strong> {item.sale}</p>}
-          {item.rent && <p><strong>Renta:</strong> {item.rent}</p>}
-
-          {/* Mostrar TODAS las imágenes */}
-          {item.images && item.images.length > 0 && (
-            <div style={{ display: "flex", gap: 10, overflowX: "auto" }}>
-              {item.images.map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  width={200}
-                  style={{ borderRadius: 8 }}
-                />
-              ))}
+        <div className="projects-row">
+          {projectItems.map((i) => (
+            <div key={i.id} className="project-card">
+              <div
+                className="project-bg"
+                style={{ backgroundImage: `url(${i.imageUrl})` }}
+                onClick={() => setSelectedProject(i)}
+              />
+              <div className="project-text">
+                <h4>Proyecto</h4>
+                <h2>{i.name}</h2>
+              </div>
+              <button
+                className="project-circle-btn"
+                onClick={() => setSelectedProject(i)}
+              >
+                +
+              </button>
             </div>
-          )}
-
-          {/* 🔵 BOTÓN REDIRECCIONADOR CORRECTO */}
-          <button
-            style={{
-              marginTop: 10,
-              padding: "8px 12px",
-              background: "#007bff",
-              color: "white",
-              borderRadius: 5,
-              border: "none",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              const path =
-                item.type === "products"
-                  ? `/products/${item.slug}`
-                  : item.type === "projects"
-                  ? `/projects/${item.slug}`
-                  : `/furniture/${item.slug}`;
-
-              window.location.href = path;
-            }}
-          >
-            Ver más información
-          </button>
+          ))}
         </div>
-      ))}
-    </div>
-  );
-};
 
-export default ProductsList;
+        <button
+          className="carousel-btn carousel-right"
+          onClick={() =>
+            document
+              .querySelector(".projects-row")
+              ?.scrollBy({ left: 400, behavior: "smooth" })
+          }
+        >
+          ›
+        </button>
+      </div>
+
+      <div className="products-grid">
+        {items
+          .filter((i) => i.type !== "project")
+          .map((i) => (
+            <div key={i.id} className="product-card">
+              <div className="product-image">
+                {i.imageUrl ? (
+                  <img src={i.imageUrl} alt={i.name} loading="lazy" />
+                ) : (
+                  <p>Sin imagen</p>
+                )}
+              </div>
+
+              <div className="product-info">
+                <h3 className="product-name">{i.name}</h3>
+
+                {i.subCategory && (
+                  <p className="product-subcategory">{i.subCategory}</p>
+                )}
+
+                {i.type === "product" && i.newOrUsed && (
+                  <p className="product-newused">
+                    {i.newOrUsed === "new" ? "Nuevo" : "Usado"}
+                  </p>
+                )}
+
+                {i.saleValue && (
+                  <>
+                    <p className="product-price-label">Venta</p>
+                    <p className="product-price">${i.saleValue}</p>
+                    <p className="iva-text">IVA incluido</p>
+                    <a
+                      href={`https://wa.me/573158246718?text=${encodeURIComponent(
+                        `Hola, quiero cotizar la compra de ${subCategorySlug} ${i.slug}`
+                      )}`}
+                      target="_blank"
+                      className="product-btn buy-btn"
+                    >
+                      Comprar
+                    </a>
+                  </>
+                )}
+
+                {i.rentalValue && (
+                  <>
+                    <p className="product-price-label">Alquiler</p>
+                    <p className="product-price">${i.rentalValue}</p>
+                    <p className="iva-text">IVA incluido</p>
+                    <a
+                      href={`https://wa.me/573158246718?text=${encodeURIComponent(
+                        `Hola, quiero cotizar el alquiler de ${subCategorySlug} ${i.slug}`
+                      )}`}
+                      target="_blank"
+                      className="product-btn rent-btn"
+                    >
+                      Alquiler
+                    </a>
+                  </>
+                )}
+
+                <a
+                  href={
+                    i.type === "furniture"
+                      ? `/furniture/${i.slug}`
+                      : `/products/${i.slug}`
+                  }
+                  className="product-btn"
+                >
+                  Ver más
+                </a>
+              </div>
+            </div>
+          ))}
+      </div>
+
+      {selectedProject && (
+        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close-btn"
+              onClick={() => setSelectedProject(null)}
+            >
+              ✕
+            </button>
+
+            <button className="modal-nav-btn modal-prev" onClick={goPrev}>
+              ‹
+            </button>
+
+            <button className="modal-nav-btn modal-next" onClick={goNext}>
+              ›
+            </button>
+
+            <img
+              className="modal-main-img"
+              src={selectedProject.imageUrl}
+              alt={selectedProject.name}
+            />
+
+            <h2 className="modal-title">{selectedProject.name}</h2>
+
+            <p className="modal-description">{selectedProject.description}</p>
+
+            {selectedProject.gallery.length > 1 && (
+              <div className="modal-gallery">
+                {selectedProject.gallery.map((img, index) => (
+                  <img key={index} src={img} alt="" loading="lazy" />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

@@ -1,0 +1,379 @@
+/* ============================================================
+   GENERAL
+============================================================ */
+
+.projects-carousel-wrapper {
+    margin-top: 3%;
+}
+
+/* ============================================================
+   TÍTULO
+============================================================ */
+
+.projects-title {
+  color: #003B29;
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin-left: 13%;
+  margin-bottom: 10px;
+}
+
+.projects-title-text {
+  color: #003B29;
+  font-size: 1.3rem;
+  text-align:left;
+  font-weight: 400;
+  margin-top: -10px;
+  margin-left: 13%;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+/* ============================================================
+   FLECHAS DEBAJO DEL TÍTULO
+============================================================ */
+
+.top-arrows {
+  display: flex;
+  gap: 12px;
+  margin-left: 13%;
+  margin-bottom: 20px;
+}
+
+.carousel-btn-main {
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.2);
+}
+
+.carousel-btn-main:hover {
+  background: rgba(187, 187, 187, 0.9);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* Ocultar flechas en pantallas pequeñas */
+@media (max-width: 1024px) {
+  .top-arrows {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   CARRUSEL PRINCIPAL
+============================================================ */
+
+.projects-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.projects-row {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+
+  padding-left: 13%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+
+  scrollbar-width: none;
+}
+
+.projects-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================================
+   CARDS
+============================================================ */
+
+.project-card {
+  flex: 0 0 300px;
+  height: 510px;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+
+/* Imagen de fondo oscura */
+.project-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+
+  filter: brightness(65%);
+  transition: 0.35s ease-in-out;
+}
+
+/* Al pasar el mouse: imagen normal */
+.project-card:hover .project-bg {
+  filter: brightness(100%);
+}
+
+/* Textos de la card */
+.project-text {
+  position: absolute;
+  top: 0px;
+  left: 30px;
+  color: white;
+  z-index: 10;
+}
+
+.project-text h4 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.project-text h2 {
+  margin-top: -18px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  max-width: 60%;
+  line-height: 1.1;
+}
+
+/* Botón + */
+.project-circle-btn {
+  position: absolute;
+  bottom: 22px;
+  right: 22px;
+  width: 46px;
+  height: 46px;
+  background: #fff;
+  border-radius: 50%;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ============================================================
+   MODAL
+============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-container {
+  background: #fff;
+  width: 50%;
+  height: 80%;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  
+  border-radius: 50%;
+  background: #ffffff;
+  color: #040404;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Carrusel modal */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  position: absolute;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+/* Flechas modal */
+.modal-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background:white;
+  color: rgb(1, 1, 1);
+  border: none;
+  padding: 1px 14px 1px 14px;
+  font-size: 30px;
+  cursor: pointer;
+  border-radius: 30px;
+  z-index: 10;
+}
+
+.modal-arrow.left { left: 15px; }
+.modal-arrow.right { right: 15px; }
+
+/* Puntos */
+.carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background: rgba(255,255,255,0.6);
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* ============================================================
+   TEXTOS DEL MODAL
+============================================================ */
+
+.modal-title {
+  margin-top: 10px;
+  font-size: 1.6rem;
+  padding: 0px 50px 0;
+}
+
+.modal-description {
+  margin-top: -15px;
+  padding: 0 50px 30px;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET
+============================================================ */
+
+@media (max-width: 1024px) {
+
+  .projects-title {
+    font-size: 2.2rem;
+    margin-left: 6%;
+  }
+
+  .projects-row {
+    padding-left: 6%;
+  }
+
+  .project-card {
+    flex: 0 0 260px;
+    height: 480px;
+  }
+
+  .project-text h2 { font-size: 1rem; }
+  .project-text h4 { font-size: 0.8rem; }
+
+  .project-circle-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MÓVIL
+============================================================ */
+
+@media (max-width: 768px) {
+
+  .projects-title {
+    font-size: 1.7rem;
+    margin-left: 4%;
+  }
+
+  .projects-row {
+    padding-left: 4%;
+    gap: 18px;
+  }
+
+  .project-card {
+    flex: 0 0 230px;
+    height: 430px;
+    border-radius: 24px;
+  }
+
+  .project-text {
+    top: 20px;
+    left: 20px;
+  }
+
+  .project-text h2 { font-size: 0.9rem; }
+  .project-text h4 { font-size: 0.75rem; }
+
+  .project-circle-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+    padding: 18px 25px 0;
+  }
+
+  .modal-description {
+    padding: 0 25px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MÓVIL PEQUEÑO
+============================================================ */
+
+@media (max-width: 480px) {
+
+  .projects-title {
+    font-size: 1.8rem;
+    margin-left: 5%;
+  }
+
+  .project-card {
+    flex: 0 0 190px;
+    height: 380px;
+  }
+
+  .project-text h2 { font-size: 0.8rem; }
+  .project-text h4 { font-size: 0.7rem; }
+
+  .project-circle-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 19px;
+  }
+}

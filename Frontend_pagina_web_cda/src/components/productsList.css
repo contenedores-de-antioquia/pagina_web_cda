@@ -1,230 +1,526 @@
-/* ================================
-   🟩 GRID DE PRODUCTOS
-================================ */
+/* ============================================================
+   🟩 SECCIÓN 1 — MOBILIARIO & PRODUCTOS  (NO SE TOCA NADA)
+   ============================================================ */
+
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 20px;
-  padding: 15px;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 28px;
+  justify-content: center;
+  padding: 10px 0;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* ================================
-   🟩 CARD PADRE
-================================ */
 .product-card {
   display: flex;
-  flex-direction: row;
-  margin: 8px;
-  background-color: white;
-  border-radius: 25px;
-  overflow: hidden; /* Hace que la imagen respete el borde */
-  transition: all 0.3s ease; /* Suaviza hover */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Difuminado suave */
-  text-decoration: none; /* Para que no se subraye el enlace */
+  background-color: #fff;
+  border-radius: 18px;
+  height: 380px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
-/* Hover */
 .product-card:hover {
-  border: 1.5px solid #006D40; /* Borde verde */
-  transform: translateY(-4px); /* Elevación */
-  cursor: pointer;
+  transform: scale(1.015);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* ================================
-   🟩 IMAGEN DEL PRODUCTO
-================================ */
 .product-image {
-  width: 45%;
-  background-color: #ffffff;
-  position: relative;
-  aspect-ratio: 1 / 1; /* Hace la imagen cuadrada */
-  min-height: 280px; /* Altura mínima consistente */
-  flex-shrink: 0; /* Evita que se reduzca */
-  overflow: hidden; /* Evita que la imagen se salga */
-  border-radius: 25px 0 0 25px; /* Mantiene el borde redondeado */
-}
-
-/* Ajustes base de imagen */
-.product-image img {
-  width: 100%;
+  width: 70%;
   height: 100%;
-  object-fit: cover; /* Ajusta sin deformar */
-  display: block;
-}
-
-/* ================================
-   🟩 INFORMACIÓN DEL PRODUCTO
-================================ */
-.product-info {
-  width: 55%;
-  padding: 15px 20px;
-  color: #006D40;
-}
-
-.product-name {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #003B29;
-  line-height: 1.1;
-}
-
-.product-tag {
-  font-size: 1rem;
-  font-weight: 520;
-  color: #003B29;
-  margin-top: -5px;
-}
-
-/* ================================
-   🟩 SECCIÓN DE VENTA Y ALQUILER
-================================ */
-.product-sale,
-.product-rent {
-  margin-top: 30px;
-  line-height: 0.4;
-}
-
-.product-label {
-  font-size: 1rem;
-  font-weight: 560;
-  color: #006D40;
-}
-
-.product-price {
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: #006D40;
-}
-
-.product-tax {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #006D40;
-}
-
-/* ================================
-   🟩 BOTONES
-================================ */
-.product-btn {
-  color: white;
-  text-decoration: none;
-  padding: 8px 20px;
-  border-radius: 30px;
-  background-color: #003B29;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.product-btn:hover {
-  background-color: #006D40;
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 109, 64, 0.3);
-}
-
-.product-btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 2px 6px rgba(0, 59, 41, 0.4);
-}
-
-/* ================================
-   🟩 LOGÍSTICA
-================================ */
-.product-logistics {
-  margin-top: 25px;
-}
-
-.logistics-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #006D40;
-  line-height: 1.1;
-}
-
-/* ================================
-   🟩 RESPONSIVE
-================================ */
-@media (max-width: 850px) {
-  .product-card {
-    flex-direction: column;
-  }
-
-  .product-image {
-    width: 100%;
-    height: 220px;
-  }
-
-  .product-info {
-    width: 100%;
-  }
-}
-
-/* ==========================================================
-   🟩 SLIDER DE IMÁGENES (AGREGADO, NO MODIFICA NADA TUYO)
-========================================================== */
-
-/* Contenedor del slider con tamaño cuadrado */
-.product-image {
-  position: relative;
-  width: 45%;
-  aspect-ratio: 1 / 1;
   overflow: hidden;
 }
 
-/* Wrapper de todas las imágenes en fila */
-.image-slider {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Cada slide */
-.image-slide {
-  min-width: 100%;
-  height: 100%;
-}
-
-/* Imagen dentro del slide */
-.image-slide img {
+.product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Flechas */
-.slider-btn {
+.product-info {
+  width: 30%;
+  padding: 10px 12px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #003B29;
+}
+
+/* ===========================
+   TEXTOS
+   =========================== */
+
+.product-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.product-subcategory {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #006646;
+  margin: 2px 0;
+  opacity: 0.9;
+}
+
+.product-newused {
+  font-size: 0.90rem;
+  font-weight: 400;
+  color: #003B29;
+  opacity: 0.8;
+  margin-bottom: 1px;
+  margin-top: -2px;
+}
+
+.product-status,
+.product-link {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.1;
+  opacity: 0.8;
+}
+
+.product-price-label {
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin: 4px 0 -2px 0;
+  color: #004d36;
+}
+
+.product-price {
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 1.2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.product-divider {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid #d0d0d0;
+}
+
+.iva-text {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: -2px;
+}
+
+/* ============================================================
+   🎨 BOTONES PREMIUM (SIN CAMBIAR DISEÑO)
+   ============================================================ */
+
+.product-btn {
+  align-self: flex-start;
+  padding: 2px 10px;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  font-weight: 400;
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  background: #fcfdfd;
+  color: #006D40;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background .25s ease, transform .2s ease, box-shadow .25s ease;
+  margin-top: 20px;
+}
+
+.product-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  text-decoration: underline;
+}
+
+.buy-btn {
+  background: #ffffff;
+  color: #003B29;
+  border: 1px solid #006646;
+  border-radius: 30px;
+  margin-top: -10px;
+}
+
+.buy-btn:hover {
+  background: #006D40;
+  color: white;
+  text-decoration: none;
+}
+
+.rent-btn {
+  background: #ffffff;
+  color: #003B29;
+  border: 1px solid #006646;
+  border-radius: 30px;
+  margin-top: -10px;
+}
+
+.rent-btn:hover {
+  background: #006D40;
+  color: white;
+  text-decoration: none;
+}
+
+/* ============================================================
+   📱 RESPONSIVE — AJUSTES SOLO PARA PANTALLAS PEQUEÑAS
+   (NO SE TOCA EL DISEÑO PRINCIPAL)
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  /* 1 producto por fila */
+  .products-grid {
+    max-width: 500px;
+    grid-template-columns: 1fr;
+  }
+
+  /* Mantener diseño horizontal */
+  .product-card {
+    flex-direction: row;
+    height: 360px;          /* más adecuado para móvil */
+  }
+
+  .product-image {
+    width: 80%;
+    height: 100%;
+  }
+
+  .product-info {
+    width: 30%;
+    padding: 10px;
+    margin-top: 8px;
+    gap: 6px;
+  }
+
+  /* Ajustes visuales suaves */
+  .product-name {
+    font-size: 1.3rem;
+    line-height: 1.1;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .product-btn {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    margin-top: px;
+  }
+}
+
+
+/* ============================================================
+   🟦 PROYECTOS — APPLE HIGHLIGHT STYLE + CARRUSEL
+   ============================================================ */
+
+.projects-row {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px;
+  scrollbar-width: none;
+}
+
+.projects-row::-webkit-scrollbar {
+  display: none;
+}
+
+.project-card {
+  flex: 0 0 360px; /* ancho exacto estilo Apple */
+  height: 620px; /* alto Apple */
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+
+.project-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.project-text {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  color: white;
+  z-index: 5;
+}
+
+.project-text h4 {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.project-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 6px;
+  max-width: 80%;
+  line-height: 1.2;
+}
+
+.project-circle-btn {
+  position: absolute;
+  bottom: 22px;
+  right: 22px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform .2s ease;
+}
+
+.project-circle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Botones laterales del carrusel */
+.carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 59, 41, 0.7);
-  border: none;
-  color: white;
-  font-size: 22px;
-  padding: 8px 12px;
-  cursor: pointer;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  z-index: 10;
-  transition: 0.2s ease;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 20;
+  border: none;
 }
 
-.slider-btn:hover {
-  background: rgba(0, 109, 64, 0.8);
+.carousel-btn:hover {
+  background: white;
 }
 
-.slider-btn.prev {
-  left: 10px;
-}
+.carousel-left { left: 10px; }
+.carousel-right { right: 10px; }
 
-.slider-btn.next {
-  right: 10px;
-}
-
-/* Responsive para slider */
-@media (max-width: 850px) {
-  .product-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
+/* MOBILE SCROLL NICE */
+@media (max-width: 600px) {
+  .project-card {
+    flex: 0 0 85%;
+    height: 580px;
   }
+}
+/* ============================================================
+   🟦 APPLE HOVER — ZOOM SUAVE
+   ============================================================ */
+
+/* ✨ Capa negra suave en las cards */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.project-card:hover::after {
+  opacity: 0;
+}
+
+@media (hover: none) {
+  .project-card::after {
+    opacity: 0;
+  }
+}
+
+.project-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transform-origin: center;
+}
+
+.project-card:hover {
+  transform: scale(1.035);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.project-card:hover .project-bg {
+  transform: scale(1.06);
+}
+
+.project-bg {
+  transition: transform 0.45s ease;
+}
+
+/* Evitar hover en móvil */
+@media (hover: none) {
+  .project-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ============================================================
+   🔵 MODAL APPLE — MINIMAL, ELEGANTE, TIPOGRAFÍA FINA
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.modal-container {
+  width: 92%;
+  max-width: 900px;
+  background: white;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  position: relative;
+  animation: fadeIn .35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* BOTÓN CERRAR */
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(0,0,0,0.75);
+  color: white;
+  border: none;
+  font-size: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.modal-close-btn:hover {
+  background: black;
+}
+
+/* IMAGEN PRINCIPAL */
+.modal-main-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+/* TEXTO Y DESCRIPCIÓN */
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 22px 28px 4px;
+  color: #ff0606;
+}
+
+.modal-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 0 28px 20px;
+  color: #333;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* GALERÍA */
+.modal-gallery {
+  display: flex;
+  gap: 12px;
+  padding: 0 28px 28px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.modal-gallery img {
+  width: 180px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  transition: transform .25s ease;
+}
+
+.modal-gallery img:hover {
+  transform: scale(1.06);
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .modal-main-img {
+    height: 260px;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .modal-description {
+    font-size: .9rem;
+  }
+}
+
+/* Botones navegación dentro del modal */
+.modal-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.modal-nav-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.modal-prev {
+  left: 18px;
+}
+
+.modal-next {
+  right: 18px;
 }

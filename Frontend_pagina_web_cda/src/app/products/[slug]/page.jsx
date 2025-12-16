@@ -1,140 +1,135 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-
-
+import "./product.css";
 
 export default function ProductPage({ params }) {
-  const { slug } = params;
+  // ✅ Corrección: evitar undefined y mantener orden category → subcategory → slug
+  const category = params?.category || "";
+  const subcategory = params?.subcategory || "";
+  const slug = params?.slug || "";
+
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchProduct() {
+    async function loadProduct() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/products?filters[slug][$eq]=${slug}&populate=*`,
-          { cache: "no-store" }
+          `http://localhost:1337/api/products?filters[slug][$eq]=${slug}&populate=*`
         );
 
         const json = await res.json();
-        const item = json?.data?.[0];
-
-        if (!item) return setProduct(null);
-
-        // 📌 Strapi te entrega el producto PLANO, NO dentro de attributes
-        const attrs = item;
-
-        const getImageURL = (img) => {
-          if (!img) return null;
-
-          // si existe formato medium → usarlo
-          if (img.formats?.medium?.url)
-            return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.formats.medium.url}`;
-
-          // si existe small
-          if (img.formats?.small?.url)
-            return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.formats.small.url}`;
-
-          // fallback
-          if (img.url)
-            return `${process.env.NEXT_PUBLIC_STRAPI_URL}${img.url}`;
-
-          return null;
-        };
-
-        const imagesArray = [];
-
-        // 📌 Si algún día images deja de ser null
-        if (attrs.images && Array.isArray(attrs.images)) {
-          attrs.images.forEach((img) => {
-            imagesArray.push(`${process.env.NEXT_PUBLIC_STRAPI_URL}${img.url}`);
-          });
-        }
-
-        // 📌 imageMeasurements (siempre existe según tu JSON)
-        if (attrs.imageMeasurements?.url) {
-          imagesArray.push(getImageURL(attrs.imageMeasurements));
-        }
-
-        setProduct({
-          id: item.id,
-          name: attrs.productName,
-          description: attrs.description || attrs.productDescription,
-          newOrUsed: attrs.newOrUsed,
-          sale: attrs.saleValue,
-          rent: attrs.rentalValue,
-          images: imagesArray, // ✔ ahora SIEMPRE será un array de imágenes
-          coatingImage: getImageURL(attrs.typeOfCoating),
-          floorImage: getImageURL(attrs.typeOfFloor),
-        });
-      } catch (err) {
-        console.error("❌ Error al cargar producto:", err);
+        setProduct(json?.data?.[0] || null);
+      } catch (error) {
+        console.error("Error cargando producto:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchProduct();
+    loadProduct();
   }, [slug]);
 
-  if (!product) {
-    return (
-      <div className="p-10">
-        <h1 className="text-2xl font-bold">Producto no encontrado.</h1>
-      </div>
-    );
-  }
+  if (loading) return <p>Cargando...</p>;
+  if (!product) return <p>Producto no encontrado.</p>;
+
+  const base = "http://localhost:1337";
+
+  const title = product.productName;
+  const description = product.description;
+
+  const images = product.images || [];
+  const saleValue = product.saleValue;
+  const rentalValue = product.rentalValue;
+
+  const blocks = [
+    product.imageMeasurements,
+    product.typeOfCoating,
+    product.typeOfFloor,
+    product.typeOfFinish,
+    product.numberOfWindows,
+    product.doors,
+    product.electricalNetwork,
+    product.outlet,
+    product.voiceAndData,
+    product.switch,
+    product.lightning,
+    product.airConditioning,
+  ].filter(Boolean);
+
+  // ✅ WhatsApp: category → subcategory → slug (sin undefined)
+  const whatsappBuy = `https://wa.me/573158246718?text=Hola,%20quiero%20cotizar%20la%20compra%20de%20${encodeURIComponent(
+    category
+  )}%20/%20${encodeURIComponent(subcategory)}%20/%20${encodeURIComponent(slug)}`;
+
+  const whatsappRent = `https://wa.me/573158246718?text=Hola,%20quiero%20cotizar%20el%20alquiler%20de%20${encodeURIComponent(
+    category
+  )}%20/%20${encodeURIComponent(subcategory)}%20/%20${encodeURIComponent(slug)}`;
 
   return (
-    <div className="px-10 py-20">
-    
-      <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-      <p className="text-gray-600 mb-6">{product.newOrUsed}</p>
+    <div className="product-page">
+      {images?.[0] && (
+        <div className="hero-image-box">
+          <img
+            src={`${base}${images[0].url}`}
+            className="hero-image"
+            alt={title}
+          />
+        </div>
+      )}
 
-      {/* 🖼️ CARRUSEL SIMPLE CON TODAS LAS IMÁGENES */}
-      {product.images.length > 0 && (
-        <div className="flex gap-4 overflow-x-auto mb-10">
-          {product.images.map((img, i) => (
+      <h1 className="product-title">{title}</h1>
+      <p className="product-subtitle">{description}</p>
+
+      <div className="price-section">
+        {saleValue && (
+          <div className="price-box">
+            <p className="price-label">Venta</p>
+            <p className="price-value">${saleValue}</p>
+            <p className="price-note">IVA incluido</p>
+
+            <a href={whatsappBuy} target="_blank" className="buy-btn">
+              Comprar
+            </a>
+          </div>
+        )}
+
+        {rentalValue && (
+          <div className="price-box">
+            <p className="price-label">Alquiler</p>
+            <p className="price-value">${rentalValue}</p>
+            <p className="price-note">IVA incluido</p>
+
+            <a href={whatsappRent} target="_blank" className="rent-btn">
+              Alquilar
+            </a>
+          </div>
+        )}
+      </div>
+
+      <h2 className="tech-title">Ficha técnica</h2>
+
+      <div className="features-grid">
+        {blocks.map((b, i) => (
+          <div key={i} className="feature-card">
+            <img src={`${base}${b.url}`} alt="" className="feature-img" />
+          </div>
+        ))}
+      </div>
+
+      {images.length > 1 && (
+        <div className="gallery-grid">
+          {images.slice(1).map((img) => (
             <img
-              key={i}
-              src={img}
-              className="rounded-lg w-[300px] h-auto"
+              key={img.id}
+              src={`${base}${img.url}`}
+              alt=""
+              className="gallery-img"
             />
           ))}
         </div>
       )}
-
-      {/* 🔵 DESCRIPCIÓN */}
-      <p className="text-lg leading-relaxed mb-10">
-        {product.description}
-      </p>
-
-      {/* ⭐ COATING & FLOOR */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        {product.coatingImage && (
-          <div>
-            <h3 className="font-bold mb-2">Tipo de Acabado</h3>
-            <img src={product.coatingImage} className="rounded-lg" />
-          </div>
-        )}
-
-        {product.floorImage && (
-          <div>
-            <h3 className="font-bold mb-2">Tipo de Piso</h3>
-            <img src={product.floorImage} className="rounded-lg" />
-          </div>
-        )}
-      </div>
-
-      {/* 💰 VALORES */}
-      <div className="mt-10">
-        {product.sale && (
-          <p className="text-xl font-bold">Valor venta: ${product.sale}</p>
-        )}
-
-        {product.rent && (
-          <p className="text-xl font-bold mt-2">Valor renta: ${product.rent}</p>
-        )}
-      </div>
     </div>
   );
 }

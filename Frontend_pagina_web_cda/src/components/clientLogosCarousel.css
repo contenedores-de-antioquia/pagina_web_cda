@@ -1,0 +1,70 @@
+/* ===========================
+   WRAPPER GENERAL
+=========================== */
+.client-logos-wrapper {
+  width: 100%;
+  padding: 50px 0;
+  overflow: hidden;
+}
+
+.client-logos-title {
+  padding-left: 13%;
+  padding-bottom: 1%;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #023C29;
+  margin: 0 0 25px 0;
+}
+
+/* ===========================
+   SLIDER INFINITO
+=========================== */
+.logos-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.logos-track {
+  display: flex;
+  width: max-content;
+  gap: 70px;                  /* 🔥 MÁS ESPACIO ENTRE LOGOS */
+  animation: scrollInfinite 50s linear infinite;  /* 🔥 MÁS LENTO Y SUAVE */
+}
+
+/* Logo individual */
+.logo-box img {
+  height: 30px;               /* 🔥 MÁS PEQUEÑOS */
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.85;
+  transition: 0.3s ease;
+}
+
+/* Hover efecto */
+.logo-box img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* ===========================
+   ANIMACIÓN INFINITA
+=========================== */
+@keyframes scrollInfinite {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===========================
+   PAUSAR ANIMACIÓN EN HOVER O TOUCH
+=========================== */
+.logos-slider:hover .logos-track,
+.logos-slider:active .logos-track {
+  animation-play-state: paused;
+}

@@ -97,6 +97,9 @@
       "relation": "manyToMany",
       "target": "api::category.category",
       "mappedBy": "furnitures"
+    },
+    "active": {
+      "type": "boolean"
     }
   }
 }

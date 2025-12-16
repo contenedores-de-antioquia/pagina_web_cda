@@ -13,7 +13,6 @@
   height: 250px;
   overflow: hidden;
   background: #000;
-  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +35,7 @@
   height: 350px;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: 12px;
+ 
 }
 
 /* === Dots de navegación === */
@@ -60,7 +59,7 @@
 }
 
 .dots span.active {
-  background: #00ff88;
+  background: #88C496;
   width: 20px;
   border-radius: 20px;
 }

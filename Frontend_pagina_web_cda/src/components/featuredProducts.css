@@ -1,0 +1,231 @@
+/* CONTENEDOR PRINCIPAL */
+.fp-container {
+  position: relative;
+  background: #E0DFDD;
+}
+
+.fp-title {
+  color: #003B29;
+  font-size: 2.1rem;
+  text-align:left;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-left: 13%;
+  padding-top: 2%;
+  line-height: 1;
+}
+
+.fp-title-text {
+  color: #003B29;
+  font-size: 1.3rem;
+  text-align:left;
+  font-weight: 400;
+  margin-top: -10px;
+  margin-left: 13%;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+/* FLECHAS (VISIBLE EN TODOS LOS TAMAÑOS) */
+.fp-arrows-wrapper {
+  display: flex;
+  gap: 15px;
+  margin-left: 13%;
+  margin-bottom: 25px;
+}
+
+.fp-arrow {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 22px;
+  font-weight: bold;
+  color: #737171;
+  transition: 0.2s ease;
+  margin-top: -30px;
+}
+
+.fp-arrow:hover {
+  background: rgba(187, 187, 187, 0.9);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* CARRUSEL */
+.fp-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 25px;
+
+  padding-left: 13%;
+  padding-right: 40px;
+  padding-bottom: 20px;
+}
+
+.fp-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* TARJETA */
+.fp-card {
+  min-width: 300px;
+  background: #E0DFDD;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.fp-card:hover {
+  transform: translateY(-5px);
+}
+
+/* IMAGEN */
+.fp-img-box {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: #fafafa;
+  border-radius: 30px;
+}
+
+.fp-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENIDO */
+.fp-content {
+  padding: 2px 0px 15px 2px;
+  text-align: center;
+}
+
+.fp-name {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 5px 0 10px;
+}
+
+.fp-type {
+  margin: -10px 0;
+  font-weight: 100;
+  font-size: 0.9rem;
+  color: #6d6d6d;
+}
+
+.fp-prices{
+    padding-top: 8px;
+    font-size: 15px;
+    line-height: 0.5;
+}
+
+/* BOTONES */
+.fp-buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.fp-btn {
+  margin-top: -5px;
+  padding: 5px 18px;
+  background: #003B29;
+  color: white;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.fp-btn.info {
+  font-size: 15px;
+  background:none;
+  color: #023C29;
+}
+
+.fp-btn.info:hover{
+  text-decoration:underline;
+}
+
+/* =========================================================
+   🔥 TABLET (769px – 1024px)
+   ========================================================= */
+@media (max-width: 1024px) and (min-width: 769px) {
+
+  .fp-carousel {
+    padding-left: 2%;
+    padding-right: 20px;
+  }
+
+  .fp-title {
+    font-size: 2rem;
+    margin-left: 6%;
+  }
+
+  .fp-title-text {
+    font-size: 1.4rem;
+    margin-left: 6%;
+  }
+
+  .fp-card {
+    min-width: 280px;
+  }
+
+  .fp-img-box {
+    height: 280px;
+  }
+
+  .fp-name {
+    font-size: 1.2rem;
+  }
+
+  .fp-btn {
+    padding: 8px 15px;
+    font-size: 0.7rem;
+  }
+}
+
+/* =========================================================
+   🔥 MÓVIL (≤ 768px)
+   (YA NO OCULTAMOS LAS FLECHAS)
+   ========================================================= */
+@media (max-width: 768px) {
+
+  .fp-carousel {
+    padding-left: 0%;
+    padding-right: 15px;
+  }
+
+  .fp-title {
+    font-size: 1.6rem;
+    margin-left: 5%;
+  }
+
+  .fp-title-text {
+    font-size: 1.2rem;
+    margin-left: 5%;
+  }
+
+  .fp-card {
+    min-width: 260px;
+  }
+
+  .fp-img-box {
+    height: 230px;
+  }
+
+  .fp-name {
+    font-size: 1.1rem;
+  }
+
+  .fp-btn {
+    font-size: 0.65rem;
+    padding: 7px 14px;
+  }
+}

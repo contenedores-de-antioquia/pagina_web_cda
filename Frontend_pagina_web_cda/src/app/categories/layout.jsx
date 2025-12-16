@@ -6,11 +6,9 @@ import Breadcrumb from "@/components/Breadcrumb";
 export default function ContainersLayout({ children }) {
   return (
     <>
-      <NavbarContainer />
-      
-      {/* Breadcrumb aquí ↓ */}
+    {/* Breadcrumb aquí ↓ */}
       <Breadcrumb />
-
+      <NavbarContainer />
       {children}
     </>
   );

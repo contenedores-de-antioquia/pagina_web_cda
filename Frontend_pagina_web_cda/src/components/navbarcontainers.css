@@ -4,9 +4,9 @@
   width: 100%;
   overflow: hidden; /* Oculta el scroll */
   background-color: #fff;
-  border-top: 2px solid #eee;
+  border-top: 2px solid #ffffff;
   border-bottom: 2px solid #eee;
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   justify-content: center;
   align-items: center;

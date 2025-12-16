@@ -36,6 +36,9 @@
     "slug": {
       "type": "uid",
       "targetField": "projectName"
+    },
+    "active": {
+      "type": "boolean"
     }
   }
 }

@@ -478,6 +478,7 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    active: Schema.Attribute.Boolean;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -568,6 +569,39 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiClientLogoClientLogo extends Struct.CollectionTypeSchema {
+  collectionName: 'client_logos';
+  info: {
+    displayName: 'clientLogo';
+    pluralName: 'client-logos';
+    singularName: 'client-logo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    clientName: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    imageClientlogo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::client-logo.client-logo'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'clientName'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContainerCategoryContainerCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'container_categories';
@@ -617,6 +651,7 @@ export interface ApiFurnitureFurniture extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    active: Schema.Attribute.Boolean;
     categories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
@@ -752,6 +787,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    active: Schema.Attribute.Boolean;
     categories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
@@ -1293,6 +1329,7 @@ declare module '@strapi/strapi' {
       'api::banner.banner': ApiBannerBanner;
       'api::category-of-project.category-of-project': ApiCategoryOfProjectCategoryOfProject;
       'api::category.category': ApiCategoryCategory;
+      'api::client-logo.client-logo': ApiClientLogoClientLogo;
       'api::container-category.container-category': ApiContainerCategoryContainerCategory;
       'api::furniture.furniture': ApiFurnitureFurniture;
       'api::product.product': ApiProductProduct;

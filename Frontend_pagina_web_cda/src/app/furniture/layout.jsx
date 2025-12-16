@@ -1,14 +1,15 @@
-import NavbarContainer from "@/components/NavbarContainers";
-import { title } from "process";
+// src/app/furniture/layout.jsx
+
+import React from "react";
+import NadvarContainers from "@/components/NavbarContainers";
+import Breadcrumb from "@/components/Breadcrumb"; // agregado import correcto
 
 export default function ContainersLayout({ children }) {
   return (
     <>
-      <NavbarContainer />
+      <Breadcrumb />
+      <NadvarContainers/>
       {children}
-      
     </>
-    
-    
   );
 }

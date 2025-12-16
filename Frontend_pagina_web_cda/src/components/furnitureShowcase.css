@@ -1,0 +1,145 @@
+/* TÍTULOS */
+.forniture-title {
+  color: #003B29;
+  font-size: 2.1rem;
+  text-align:left;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-left: 13%;
+  padding-top: 2%;
+  line-height: 1;
+}
+
+.forniture-subtitle {
+  color: #003B29;
+  font-size: 1.3rem;
+  text-align:left;
+  font-weight: 400;
+  margin-top: -10px;
+  margin-left: 13%;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+/* ==========================================================
+   🔥 NUEVO: FLECHAS DEBAJO DEL SUBTÍTULO (igual a Proyectos)
+========================================================== */
+.forniture-top-arrows {
+  display: flex;
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.forniture-main-arrow {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.2);
+}
+
+.forniture-main-arrow:hover {
+  background: rgba(187, 187, 187, 0.9);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* Ocultar flechas en tablet y móvil */
+@media (max-width: 1024px) {
+  .forniture-top-arrows {
+    display: none;
+  }
+}
+
+/* ==========================================================
+   CARRUSEL / SLIDER
+========================================================== */
+
+.forniture-slider-container {
+  width: 100%;
+  padding-left: 13%; /* mantiene el espacio izquierdo */
+  overflow: hidden;
+}
+
+.forniture-slider {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 25px;
+}
+
+.forniture-slider::-webkit-scrollbar {
+  height: 0;
+}
+
+/* CARDS DEL SLIDER */
+.forniture-slide-card {
+  min-width: 280px;
+  background: #E0DFDD;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .35s ease;
+}
+
+.forniture-slide-card:hover {
+  transform: translateY(-6px);
+}
+
+.forniture-slide-img {
+  width: 100%;
+  height: 230px;
+  background-size: cover;
+  background-position: center;
+}
+
+.forniture-slide-info {
+  padding: 18px;
+  text-align: left;
+}
+
+.forniture-slide-info h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 5px 0 10px;
+}
+
+.forniture-price {
+  margin-top: -10px;
+  font-size: 1.03rem;
+  color: #023C29;
+  font-weight: 800;
+  margin-bottom: 0px;
+}
+
+.forniture-rent{
+  font-size: .9rem;
+}
+
+.forniture-view-btn{
+  display: flex;
+  margin-top: 5px;
+  margin-left: -6px;
+  font-size: 15px;
+  background:none;
+  color: #023C29;
+  border: none;
+}
+
+.forniture-view-btn:hover{
+  text-decoration:underline;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .forniture-slider-container { padding-left: 0; }
+  .forniture-slide-card { min-width: 240px; }
+  .forniture-slide-img { height: 180px; }
+}

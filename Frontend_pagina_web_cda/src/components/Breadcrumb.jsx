@@ -2,35 +2,55 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useMemo } from "react";
+import "./breadcrumb.css";
 
 export default function Breadcrumb() {
-  const pathname = usePathname();
+  const pathname = usePathname()?.trim() || "/";
 
-  // dividir la ruta
-  const segments = pathname.split("/").filter(Boolean);
+  // ⬅️ MEMO: evita recalcular en cada render
+  const filteredSegments = useMemo(() => {
+    if (pathname === "/") return [];
 
-  // remover "categories"
-  const filtered = segments.filter(seg => seg !== "categories");
+    return pathname
+      .split("/")
+      .filter(Boolean)
+      .filter((seg) => seg !== "categories");
+  }, [pathname]);
+
+  // ⬅️ MEMO: genera todos los paths y labels
+  const crumbs = useMemo(() => {
+    return filteredSegments.map((segment, index) => {
+      const href = `/categories/${filteredSegments
+        .slice(0, index + 1)
+        .join("/")}`;
+
+      return {
+        href,
+        label: segment.replace(/-/g, " "),
+        isLast: index === filteredSegments.length - 1,
+      };
+    });
+  }, [filteredSegments]);
 
   return (
-    <div className="px-6 py-3 text-sm text-gray-600">
-      <Link href="/" className="text-blue-600 hover:underline">
+    <div className="breadcrumb-container">
+      <Link href="/" className="breadcrumb-link">
         Inicio
       </Link>
 
-      {filtered.map((segment, index) => {
-        const href = "/" + filtered.slice(0, index + 1).join("/");
-        const label = segment.replace("-", " ");
+      {crumbs.map((c, i) => (
+        <span key={i}>
+          <span className="breadcrumb-separator">/</span>
 
-        return (
-          <span key={index}>
-            {" / "}
-            <Link href={href} className="text-blue-600 hover:underline capitalize">
-              {label}
-            </Link>
-          </span>
-        );
-      })}
+          <Link
+            href={c.href}
+            className={c.isLast ? "breadcrumb-active" : "breadcrumb-link"}
+          >
+            {c.label}
+          </Link>
+        </span>
+      ))}
     </div>
   );
 }

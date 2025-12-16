@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import {Flow_Block} from "next/font/google";
 import "./globals.css";
 
@@ -18,6 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Navbar />
         </section>
         {children}
+        <section>
+          <Footer/>
+        </section>
       </body>
     </html>
   );

@@ -1,0 +1,202 @@
+/* =======================
+   FOOTER PRINCIPAL
+======================= */
+.footer {
+  background-color: #e8e8e8;
+  padding: 50px 100px;
+  color: #4a4a4a;
+}
+
+/* =======================
+   CONTENEDOR SUPERIOR
+======================= */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 15% 0 15%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* =======================
+   COLUMNAS
+======================= */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 10px;
+}
+
+/* Títulos */
+.footer-column h4 {
+  margin: 0 0 -10px;
+  font-size: 14px;
+  color: #5b5b5b;
+  font-weight: 800;
+}
+
+.direction{
+  font-size: 14px;
+
+}
+
+.email{
+  font-size: 14px;
+  margin-top: -1;
+}
+
+/* =======================
+   LINKS
+======================= */
+.footer-link {
+  color: #5b5b5b;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #6d6d6d;
+  text-decoration: underline;
+}
+
+/* Políticas */
+
+.policy {
+  font-size: 14px;
+  margin-top: -5px;
+  color: #6d6d6d;
+}
+
+/* Ubicación */
+.location {
+  margin-top: -20px;
+  color: #6d6d6d;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.location:hover {
+  text-decoration: underline;
+}
+
+/* =======================
+   EMPRESA B
+======================= */
+.footer-bcorp {
+  text-align: center;
+  min-width: 180px;
+}
+
+.footer-bcorp img {
+  width: 115px;
+  margin-bottom: 10px;
+}
+
+.bcorp-text {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+/* =======================
+   LOGO INFERIOR
+======================= */
+.footer-logo-section {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.footer-main-logo {
+  width: 230px;
+  height: auto;
+}
+
+.small-note {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #595959;
+}
+
+/* =======================
+   COPYRIGHT
+======================= */
+.footer-copy {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #6e6e6e;
+  border-top: 1px solid #c5c5c5;
+  padding-top: 15px;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .footer-content {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Móviles grandes */
+@media (max-width: 768px) {
+
+  .footer {
+    padding: 35px 25px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 35px;
+  }
+
+  .footer-column {
+    align-items: center;
+    min-width: 100%;
+  }
+
+  .footer-bcorp img {
+    width: 95px;
+  }
+
+  .footer-main-logo {
+    width: 210px;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer-column h4 {
+    font-size: 14px;
+  }
+
+  .footer-link {
+    font-size: 13px;
+  }
+
+  .bcorp-text {
+    font-size: 14px;
+  }
+
+  .footer-main-logo {
+    width: 180px;
+  }
+}
+

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { LanguageProvider } from "@/context/LanguageContext";
+import { LanguageProvider } from "../context/LanguageContext";
 import "./globals.css";
 
 export const metadata = {

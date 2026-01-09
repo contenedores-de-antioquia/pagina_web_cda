@@ -1,5 +1,5 @@
-import NavbarContainer from "@/components/NavbarContainers";
-import Banners from "@/components/Banners";
+import NavbarContainer from "../components/NavbarContainers";
+import Banners from "../components/Banners";
 import ProjectsCarousel from "../components/ProjectsCarousel";
 import ClientLogosCarousel from "../components/ClientLogosCarousel";
 import FornitureShowcase from "../components/FurnitureShowcase";

@@ -4,16 +4,23 @@ import ProjectsCarousel from "../components/ProjectsCarousel";
 import ClientLogosCarousel from "../components/ClientLogosCarousel";
 import FornitureShowcase from "../components/FurnitureShowcase";
 import FeaturedProducts from "../components/FeaturedProducts";
+import AboutUs from "../components/AboutUs";
+import PaymentLogisticsFeatures from "../components/PaymentLogisticsFeatures";
+import OtherServices from "../components/OtherServices";
 
 export default function Home() {
   return (
     <div>
-      <Banners />
       <NavbarContainer />
-      <FeaturedProducts />
+      <Banners />
       <ProjectsCarousel />
+      <FeaturedProducts />
       <FornitureShowcase />
+      <OtherServices/>
+      <AboutUs/>
       <ClientLogosCarousel />
+      <PaymentLogisticsFeatures/>
+      
     </div>
   );
 }

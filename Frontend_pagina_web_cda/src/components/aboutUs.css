@@ -1,0 +1,165 @@
+/* -------------------------  
+   SECCIÓN
+-------------------------- */
+.aboutUsSection {
+  width: 100%;
+  padding: 50px 20px 50px;
+  background: #E0DFDD;
+
+  display: flex;
+  justify-content: center;
+
+  /* 🔒 EVITA ESPACIO LATERAL */
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* -------------------------
+   CARD VERDE PREMIUM
+-------------------------- */
+.aboutUsCard {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  padding: 60px;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+
+  /* 🎨 COLOR SÓLIDO */
+  background: #003B29;
+
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(0, 109, 64, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+
+  overflow: hidden;
+
+  /* 🔒 CLAVE: evita desbordes */
+  box-sizing: border-box;
+}
+
+/* Animación entrada */
+.aboutUsCard.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------
+   REFLEJO ANIMADO
+-------------------------- */
+.aboutUsCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.18),
+    transparent 65%
+  );
+
+  transform: translateX(-120%);
+  animation: cardShine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* -------------------------
+   COLUMNA IZQUIERDA
+-------------------------- */
+.aboutUsLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutUsYear {
+  font-size: 100px;
+  font-weight: 200;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #87C395;
+}
+
+/* -------------------------
+   COLUMNA DERECHA
+-------------------------- */
+.aboutUsRight h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+  line-height: 1.1;
+  letter-spacing: 2px;
+}
+
+.aboutUsRight p {
+  font-size: 18px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 450px;
+}
+
+/* -------------------------
+   ANIMACIÓN REFLEJO
+-------------------------- */
+@keyframes cardShine {
+  0% { transform: translateX(-120%); }
+  45% { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
+}
+
+/* -------------------------
+   TABLET
+-------------------------- */
+@media (max-width: 1024px) {
+  .aboutUsCard {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .aboutUsYear {
+    font-size: 48px;
+  }
+
+  .aboutUsRight h2 {
+    font-size: 32px;
+  }
+}
+
+/* -------------------------
+   MOBILE
+-------------------------- */
+@media (max-width: 600px) {
+  .aboutUsCard {
+    padding: 40px 24px;
+  }
+
+  .aboutUsYear {
+    font-size: 60px;
+    margin-bottom: 0px;
+  }
+
+  .aboutUsRight h2 {
+    font-size: 22px;
+    margin-top: -10%;
+  }
+
+  .aboutUsRight p {
+    font-size: 15px;
+    line-height: 1.3;
+    letter-spacing: 0.2px;
+  }
+}

@@ -1,11 +1,12 @@
 /* Contenedor general */
 .breadcrumb-container {
+  margin-top: -1;
   background: #ffffff;
-  padding: 12px 20px 0px 350px;
+  padding: 10px 0px 10px 200px;
   display: flex;
   justify-content: flex-start; /* Web: igual */
   align-items: center;
-  font-size: 15px;
+  font-size: 17px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -23,7 +24,7 @@
 
 /* Elemento activo (último del breadcrumb) */
 .breadcrumb-active {
-  color: #198754; /* Verde */
+  color: #003B29; /* Verde */
   font-weight: 600;
 }
 

@@ -47,7 +47,7 @@
   font-weight: bold;
   color: #737171;
   transition: 0.2s ease;
-  margin-top: -30px;
+  margin-top: -10px;
 }
 
 .fp-arrow:hover {
@@ -61,7 +61,6 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 25px;
-
   padding-left: 13%;
   padding-right: 40px;
   padding-bottom: 20px;
@@ -102,7 +101,7 @@
 /* CONTENIDO */
 .fp-content {
   padding: 2px 0px 15px 2px;
-  text-align: center;
+  text-align:start;
 }
 
 .fp-name {
@@ -145,6 +144,7 @@
 
 .fp-btn.info {
   font-size: 15px;
+  margin-left: -6%;
   background:none;
   color: #023C29;
 }
@@ -198,18 +198,18 @@
 @media (max-width: 768px) {
 
   .fp-carousel {
-    padding-left: 0%;
-    padding-right: 15px;
+    
+    
   }
 
   .fp-title {
-    font-size: 1.6rem;
-    margin-left: 5%;
+    font-size: 1.5rem;
+    margin-left: 13%;
   }
 
   .fp-title-text {
     font-size: 1.2rem;
-    margin-left: 5%;
+    margin-left: 13%;
   }
 
   .fp-card {

@@ -1,19 +1,29 @@
-"use client"; 
+"use client";
 
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import "./productsList.css";
 
 const BASE_URL = "http://localhost:1337";
+const WHATSAPP_NUMBER = "573158246718";
+
+/* ============================
+   FORMATO PESO COLOMBIANO
+============================ */
+const formatCOP = (value) => {
+  if (!value) return null;
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    minimumFractionDigits: 0,
+  }).format(value);
+};
 
 export default function ProductsList({ categorySlug, subCategorySlug }) {
   const [items, setItems] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    const handleEsc = (e) => e.key === "Escape" && setSelectedProject(null);
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  const projectsRowRef = useRef(null);
 
   const normalizeImage = (img) =>
     img ? (img.startsWith("http") ? img : `${BASE_URL}${img}`) : null;
@@ -43,11 +53,9 @@ export default function ProductsList({ categorySlug, subCategorySlug }) {
         gallery: a.projectImages?.map((g) => normalizeImage(g.url)) || [],
         saleValue: a.saleValue,
         rentalValue: a.rentalValue,
-
-        /* ⭐ CORREGIDO — AHORA FUNCIONA ⭐ */
         subCategory:
-          a.container_categories?.data?.[0]?.attributes?.nameCategoryContainers || null,
-
+          a.container_categories?.data?.[0]?.attributes
+            ?.nameCategoryContainers || "",
         newOrUsed: a.newOrUsed || null,
       };
     });
@@ -85,146 +93,202 @@ export default function ProductsList({ categorySlug, subCategorySlug }) {
     fetchAll();
   }, [fetchAll]);
 
+  /* ============================
+     PROYECTOS (NO TOCADO)
+  ============================ */
   const projectItems = useMemo(
     () => items.filter((i) => i.type === "project"),
     [items]
   );
 
-  const goNext = () => {
-    const i = projectItems.findIndex((p) => p.id === selectedProject.id);
-    setSelectedProject(projectItems[(i + 1) % projectItems.length]);
+  const scrollProjects = (direction) => {
+    if (!projectsRowRef.current) return;
+    const scrollAmount = 380;
+    projectsRowRef.current.scrollBy({
+      left: direction === "right" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
   };
 
-  const goPrev = () => {
-    const i = projectItems.findIndex((p) => p.id === selectedProject.id);
-    setSelectedProject(
-      projectItems[(i - 1 + projectItems.length) % projectItems.length]
+  const nextSlide = () => {
+    if (!selectedProject) return;
+    setCurrentIndex((prev) =>
+      prev === selectedProject.gallery.length - 1 ? 0 : prev + 1
     );
   };
 
+  const prevSlide = () => {
+    if (!selectedProject) return;
+    setCurrentIndex((prev) =>
+      prev === 0 ? selectedProject.gallery.length - 1 : prev - 1
+    );
+  };
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    setCurrentIndex(0);
+    const interval = setInterval(nextSlide, 3500);
+    return () => clearInterval(interval);
+  }, [selectedProject]);
+
+  const whatsappProjectLink = selectedProject
+    ? `https://wa.me/573153378600?text=${encodeURIComponent(
+        `Hola, vi este proyecto en su página ${selectedProject.name}, quiero hacer una cotización.`
+      )}`
+    : "#";
+
   return (
     <>
-      <div className="projects-carousel-wrapper">
-        <button
-          className="carousel-btn carousel-left"
-          onClick={() =>
-            document
-              .querySelector(".projects-row")
-              ?.scrollBy({ left: -400, behavior: "smooth" })
-          }
-        >
-          ‹
-        </button>
-
-        <div className="projects-row">
-          {projectItems.map((i) => (
-            <div key={i.id} className="project-card">
-              <div
-                className="project-bg"
-                style={{ backgroundImage: `url(${i.imageUrl})` }}
-                onClick={() => setSelectedProject(i)}
-              />
-              <div className="project-text">
-                <h4>Proyecto</h4>
-                <h2>{i.name}</h2>
+      {/* ============================
+         PROYECTOS (NO TOCADO)
+      ============================ */}
+      {projectItems.length > 0 && (
+        <div className="projects-carousel-wrapper">
+          <div className="projects-row" ref={projectsRowRef}>
+            {projectItems.map((i) => (
+              <div key={i.id} className="project-card">
+                <div
+                  className="project-bg"
+                  style={{ backgroundImage: `url(${i.imageUrl})` }}
+                  onClick={() => setSelectedProject(i)}
+                />
+                <div className="project-text">
+                  <h4>Proyecto</h4>
+                  <h2>{i.name}</h2>
+                </div>
+                <button
+                  className="project-circle-btn"
+                  onClick={() => setSelectedProject(i)}
+                >
+                  +
+                </button>
               </div>
-              <button
-                className="project-circle-btn"
-                onClick={() => setSelectedProject(i)}
-              >
-                +
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <div className="projects-bottom-arrows">
+            <button onClick={() => scrollProjects("left")}>‹</button>
+            <button onClick={() => scrollProjects("right")}>›</button>
+          </div>
         </div>
+      )}
 
-        <button
-          className="carousel-btn carousel-right"
-          onClick={() =>
-            document
-              .querySelector(".projects-row")
-              ?.scrollBy({ left: 400, behavior: "smooth" })
-          }
-        >
-          ›
-        </button>
-      </div>
-
+      {/* ============================
+         PRODUCTOS & MOBILIARIO
+      ============================ */}
       <div className="products-grid">
         {items
           .filter((i) => i.type !== "project")
-          .map((i) => (
-            <div key={i.id} className="product-card">
-              <div className="product-image">
-                {i.imageUrl ? (
-                  <img src={i.imageUrl} alt={i.name} loading="lazy" />
-                ) : (
-                  <p>Sin imagen</p>
-                )}
-              </div>
+          .map((i) => {
+            const productLink =
+              i.type === "furniture"
+                ? `/furniture/${i.slug}`
+                : `/products/${i.slug}`;
 
-              <div className="product-info">
-                <h3 className="product-name">{i.name}</h3>
+            const buyLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              `Hola, quiero hacer una cotización de la compra del ${i.subCategory} ${i.name} por valor de ${formatCOP(
+                i.saleValue
+              )}.`
+            )}`;
 
-                {i.subCategory && (
-                  <p className="product-subcategory">{i.subCategory}</p>
-                )}
+            const rentLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              `Hola, quiero hacer una cotización del alquiler del ${i.subCategory} ${i.name} por valor de ${formatCOP(
+                i.rentalValue
+              )}.`
+            )}`;
 
-                {i.type === "product" && i.newOrUsed && (
-                  <p className="product-newused">
-                    {i.newOrUsed === "new" ? "Nuevo" : "Usado"}
-                  </p>
-                )}
+            const logisticsLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              `Hola, quiero cotizar el servicio logístico del ${i.subCategory} ${i.name}.`
+            )}`;
 
-                {i.saleValue && (
-                  <>
-                    <p className="product-price-label">Venta</p>
-                    <p className="product-price">${i.saleValue}</p>
-                    <p className="iva-text">IVA incluido</p>
-                    <a
-                      href={`https://wa.me/573158246718?text=${encodeURIComponent(
-                        `Hola, quiero cotizar la compra de ${subCategorySlug} ${i.slug}`
-                      )}`}
-                      target="_blank"
-                      className="product-btn buy-btn"
-                    >
-                      Comprar
-                    </a>
-                  </>
-                )}
+            return (
+              <div
+                key={i.id}
+                className="product-card"
+                onClick={() => (window.location.href = productLink)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="product-image">
+                  {i.imageUrl ? (
+                    <img src={i.imageUrl} alt={i.name} loading="lazy" />
+                  ) : (
+                    <p>Sin imagen</p>
+                  )}
+                </div>
 
-                {i.rentalValue && (
-                  <>
-                    <p className="product-price-label">Alquiler</p>
-                    <p className="product-price">${i.rentalValue}</p>
-                    <p className="iva-text">IVA incluido</p>
-                    <a
-                      href={`https://wa.me/573158246718?text=${encodeURIComponent(
-                        `Hola, quiero cotizar el alquiler de ${subCategorySlug} ${i.slug}`
-                      )}`}
-                      target="_blank"
-                      className="product-btn rent-btn"
-                    >
-                      Alquiler
-                    </a>
-                  </>
-                )}
-
-                <a
-                  href={
-                    i.type === "furniture"
-                      ? `/furniture/${i.slug}`
-                      : `/products/${i.slug}`
-                  }
-                  className="product-btn"
+                <div
+                  className="product-info"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  Ver más
-                </a>
+                  <h3 className="product-name">{i.name}</h3>
+
+                  {i.subCategory && (
+                    <p className="product-subcategory">{i.subCategory}</p>
+                  )}
+
+                  {i.type === "product" && i.newOrUsed && (
+                    <p className="product-newused">
+                      {i.newOrUsed === "new" ? "Nuevo" : "Usado"}
+                    </p>
+                  )}
+
+                  {i.saleValue && (
+                    <>
+                      <p className="product-price-label">Venta</p>
+                      <p className="product-price">{formatCOP(i.saleValue)}</p>
+                      <p className="iva-text">IVA incluido</p>
+
+                      <a
+                        href={buyLink}
+                        target="_blank"
+                        className="action-btn"
+                      >
+                        Comprar
+                      </a>
+
+                      <div className="thin-line" />
+                    </>
+                  )}
+
+                  {i.rentalValue && (
+                    <>
+                      <p className="product-price-label">Alquiler</p>
+                      <p className="product-price">
+                        {formatCOP(i.rentalValue)}
+                      </p>
+                      <p className="iva-text">IVA incluido</p>
+
+                      <a
+                        href={rentLink}
+                        target="_blank"
+                        className="action-btn"
+                      >
+                        Alquilar
+                      </a>
+
+                      <a
+                        href={logisticsLink}
+                        target="_blank"
+                        className="action-btn secondary"
+                      >
+                        Cotizar servicio logístico
+                      </a>
+                    </>
+                  )}
+
+                  {/* 🔹 VER MÁS (MISMO LINK DE LA CARD) */}
+                  <a href={productLink} className="product-btn">
+                    Ver más
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
 
+      {/* ============================
+         MODAL PROYECTO (NO TOCADO)
+      ============================ */}
       {selectedProject && (
         <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
@@ -235,31 +299,47 @@ export default function ProductsList({ categorySlug, subCategorySlug }) {
               ✕
             </button>
 
-            <button className="modal-nav-btn modal-prev" onClick={goPrev}>
-              ‹
-            </button>
+            <div className="carousel-container">
+              {selectedProject.gallery.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  className={`carousel-slide ${
+                    index === currentIndex ? "active" : ""
+                  }`}
+                  alt=""
+                />
+              ))}
 
-            <button className="modal-nav-btn modal-next" onClick={goNext}>
-              ›
-            </button>
+              <button className="modal-arrow left" onClick={prevSlide}>‹</button>
+              <button className="modal-arrow right" onClick={nextSlide}>›</button>
 
-            <img
-              className="modal-main-img"
-              src={selectedProject.imageUrl}
-              alt={selectedProject.name}
-            />
-
-            <h2 className="modal-title">{selectedProject.name}</h2>
-
-            <p className="modal-description">{selectedProject.description}</p>
-
-            {selectedProject.gallery.length > 1 && (
-              <div className="modal-gallery">
-                {selectedProject.gallery.map((img, index) => (
-                  <img key={index} src={img} alt="" loading="lazy" />
+              <div className="carousel-dots">
+                {selectedProject.gallery.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`dot ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentIndex(index)}
+                  />
                 ))}
               </div>
-            )}
+            </div>
+
+            <h2 className="modal-title">{selectedProject.name}</h2>
+            <p className="modal-description">
+              {selectedProject.description}
+            </p>
+
+            <a
+              href={whatsappProjectLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="whatsapp-project-btn"
+            >
+              Cotizar un proyecto
+            </a>
           </div>
         </div>
       )}

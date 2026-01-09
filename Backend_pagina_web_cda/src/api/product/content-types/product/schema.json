@@ -36,9 +36,11 @@
     "rentalValue": {
       "type": "decimal"
     },
-    "active": {
-      "type": "boolean",
-      "default": true
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "inversedBy": "products"
     },
     "newOrUsed": {
       "type": "enumeration",
@@ -46,6 +48,16 @@
         "Contenedor nuevo",
         "Contenedor usado"
       ]
+    },
+    "container_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::container-category.container-category",
+      "mappedBy": "products"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
     },
     "imageMeasurements": {
       "type": "media",
@@ -68,6 +80,16 @@
       ]
     },
     "typeOfFloor": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ceiling": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
@@ -127,6 +149,16 @@
         "audios"
       ]
     },
+    "powerOutlets": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "voiceAndData": {
       "type": "media",
       "multiple": false,
@@ -167,17 +199,15 @@
         "audios"
       ]
     },
-    "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "inversedBy": "products"
-    },
-    "container_categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::container-category.container-category",
-      "mappedBy": "products"
+    "powerOutlets1": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

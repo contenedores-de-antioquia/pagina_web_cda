@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./furnitureShowcase.css";
 import { useRouter } from "next/navigation";
 
-const FornitureShowcase = () => {
+const FornitureShowcase = ({ hideTitles = false }) => {
   const [items, setItems] = useState([]);
   const sliderRef = useRef(null);
   const router = useRouter();
@@ -58,20 +58,25 @@ const FornitureShowcase = () => {
 
   return (
     <div className="forniture-wrapper">
+      {!hideTitles && (
+        <>
+          <h2 className="forniture-title">Mobiliario</h2>
 
-      <h2 className="forniture-title">Mobiliario</h2>
+          <p className="forniture-subtitle">
+            Diseños funcionales, resistentes y hechos con ingeniería inteligente.
+          </p>
+        </>
+      )}
 
-      <p className="forniture-subtitle">
-        Diseños funcionales, resistentes y hechos con ingeniería inteligente.
-      </p>
-
-      {/* 🔥 SLIDER */}
       <div className="forniture-slider-container">
         <div className="forniture-slider" ref={sliderRef}>
-          
           {items.map((i) => (
-            <div key={i.id} className="forniture-slide-card">
-              
+            <div
+              key={i.id}
+              className="forniture-slide-card"
+              onClick={() => router.push(`/furniture/${i.slug}`)}   // 👈🔥 agregado
+              style={{ cursor: "pointer" }}                        // 👈 permite interacción visual
+            >
               <div
                 className="forniture-slide-img"
                 style={{ backgroundImage: `url(${i.image})` }}
@@ -88,29 +93,32 @@ const FornitureShowcase = () => {
                   {i.rent || "No disponible para alquiler"}
                 </span>
 
-                {/* 🔥 BOTÓN CORRECTO CON LA RUTA BIEN */}
                 <button
                   className="forniture-view-btn"
-                  onClick={() => router.push(`/furniture/${i.slug}`)}
+                  onClick={(e) => {
+                    e.stopPropagation();                // 👈 evita doble navegación
+                    router.push(`/furniture/${i.slug}`);
+                  }}
                 >
                   Más información
                 </button>
               </div>
-
             </div>
           ))}
-
         </div>
 
-        {/* 🔥 FLECHAS */}
         <div className="forniture-top-arrows">
-          <button className="forniture-main-arrow" onClick={scrollLeft}>‹</button>
-          <button className="forniture-main-arrow" onClick={scrollRight}>›</button>
+          <button className="forniture-main-arrow" onClick={scrollLeft}>
+            ‹
+          </button>
+          <button className="forniture-main-arrow" onClick={scrollRight}>
+            ›
+          </button>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default FornitureShowcase;
+

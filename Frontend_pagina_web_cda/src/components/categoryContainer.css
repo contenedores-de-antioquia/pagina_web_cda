@@ -9,33 +9,34 @@
   padding: 5px 5px;
   font-family: "Folks", Arial, sans-serif;
   margin-top: -1%;
-  padding-left: 140px;
+  padding-left: 12%;
   gap: 150px;
   flex-wrap: nowrap;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* =============================
-   TÍTULO
-   ============================= */
+/* TÍTULO */
 .page-title {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
   color: #033d2d;
   margin: 0;
-  text-align: left;
-  margin-left: 13%;
   white-space: nowrap;
 }
 
 /* =============================
-   CONTENEDOR DE ICONOS
+   MENÚ DE CATEGORÍAS
    ============================= */
 .category-menu {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 80px;
+  justify-content: end;
+  margin-left: 27%;
+  gap: 90px;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 /* TARJETA */
@@ -43,9 +44,10 @@
   text-decoration: none;
   text-align: center;
   transition: transform 0.25s ease;
+  flex-shrink: 0;
 }
 
-/* IMÁGENES */
+/* IMAGEN */
 .img {
   width: 110px !important;
   height: 75px !important;
@@ -66,16 +68,11 @@
 
 /* TEXTO */
 .text {
+  color: #033d2d;
   margin-top: -8px;
   font-weight: 700;
   font-size: 10px;
-  font-family: "Poppins", sans-serif;
 }
-
-/* Colores */
-.size-1.text { color: #8aa09b; }
-.size-2.text { color: #033d2d; }
-.size-3.text { color: #033d2d; }
 
 /* =============================
    RESPONSIVE
@@ -84,66 +81,110 @@
 /* Tablets */
 @media (max-width: 1251px) {
   .category-wrapper {
-    padding-left: 30px;
-    gap: 60px;
-  }
-
-  .page-title {
-    margin-left: 5%;
-    font-size: 32px;
-  }
-
-  .category-menu {
+    padding-left: 40px;
     gap: 50px;
   }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .category-menu {
+    gap: 40px;
+    margin-left: 0;
+  }
 }
 
-/* Tablets pequeñas / móviles grandes */
+/* Tablets y móviles grandes */
 @media (max-width: 1000px) {
   .category-wrapper {
-    padding-left: px;
-    gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+    padding-left: 0;
     text-align: center;
   }
 
   .page-title {
-    margin-left: 0;
-    font-size: 20px;
+    font-size: 22px;
+    white-space: normal;
   }
 
   .category-menu {
-    gap: 10px;
+    margin-left: 0;
+    justify-content: center;
   }
 
   .img {
-    width: 100px !important;
-    height: 70px !important;
+    width: 95px !important;
+    height: 65px !important;
+  }
+
+  .text {
+    font-size: 9px;
   }
 }
 
-/* Móviles */
-@media (max-width: 480px) {
+/* ⭐⭐⭐ MÓVIL (SCROLL HORIZONTAL LIMPIO) ⭐⭐⭐ */
+@media (max-width: 650px) {
   .category-wrapper {
-    padding-left: 0px;
-    gap: 0px;
     flex-direction: column;
-    align-items: center;
+    gap: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;
   }
 
   .page-title {
-    font-size: 10px;
-    margin-left: 0;
+    font-size: 20px;
     text-align: center;
-  }
-
-  .img {
-    width: 90px !important;
-    height: 60px !important;
+    white-space: normal;
   }
 
   .category-menu {
-    gap: 25px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: -2%;
+    gap: 40px;
+    padding: 0px 0px;
+    margin-left: 0;
+    justify-content:center;
+
+    scroll-behavior: smooth;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .category-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-card {
+    flex: 0 0 auto;
+  }
+
+  .img {
+    width: 80px !important;
+    height: 55px !important;
+  }
+
+  .text {
+    font-size: 8px;
+  }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 420px) {
+  .img {
+    width: 70px !important;
+    height: 45px !important;
+  }
+
+  .text {
+    font-size: 7px;
   }
 }

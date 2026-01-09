@@ -1,15 +1,17 @@
-// src/app/furniture/layout.jsx
-
 import React from "react";
-import NadvarContainers from "@/components/NavbarContainers";
-import Breadcrumb from "@/components/Breadcrumb"; // agregado import correcto
+import NavbarContainers from "@/components/NavbarContainers";
+import Breadcrumb from "@/components/Breadcrumb";
+import FornitureShowcase from "../../components/FurnitureShowcase";
 
 export default function ContainersLayout({ children }) {
   return (
     <>
+      <NavbarContainers />
       <Breadcrumb />
-      <NadvarContainers/>
       {children}
+
+      {/* Ahora no se verá título ni subtítulo */}
+      <FornitureShowcase hideTitles />
     </>
   );
 }

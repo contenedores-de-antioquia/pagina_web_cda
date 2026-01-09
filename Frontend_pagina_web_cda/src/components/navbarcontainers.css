@@ -16,7 +16,7 @@
 .CircleNavbar {
   display: flex;
   flex-wrap: nowrap;
-  gap: 1.5rem;
+  gap: 2.5rem;
   list-style: none;
   padding: 0 2rem;
   margin: 0;
@@ -87,7 +87,7 @@
 .CircleNavbar-text {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #212529;
+  color: #003B29;
   text-transform: capitalize;
   text-align: center;
 }

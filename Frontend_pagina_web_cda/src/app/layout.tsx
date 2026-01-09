@@ -1,27 +1,30 @@
+import type { ReactNode } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import {Flow_Block} from "next/font/google";
+import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
-import type { ReactNode } from "react";
-
 export const metadata = {
-  title: "Contenedores de Antioquia | página-de-inicio | Contenedores maritímos",
-  descripcion: "Esta es lapagina principal de Contenedores de Antioquia",
-  Keywords: "tienda, online, conteneores, contenedor maritimos, containers, alquiler de contenedores maritímos"
-}
+  title: "Contenedores de Antioquia | Contenedores marítimos y proyectos",
+  description:
+    "Venta, alquiler y diseño de contenedores marítimos, proyectos especiales y mobiliario.",
+  keywords:
+    "contenedores, contenedores marítimos, containers, alquiler de contenedores, proyectos",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <body>
-        <section>
+        <LanguageProvider>
           <Navbar />
-        </section>
-        {children}
-        <section>
-          <Footer/>
-        </section>
+
+          <main className="page-transition">
+            {children}
+          </main>
+
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

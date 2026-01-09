@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProjectPage({ params }) {
   const { slug } = params;
+  const { language } = useLanguage();
+
   const [project, setProject] = useState(null);
+  const [translatedDescription, setTranslatedDescription] = useState("");
 
   useEffect(() => {
     async function fetchProject() {
@@ -21,7 +25,6 @@ export default function ProjectPage({ params }) {
 
         const attrs = entry.attributes;
 
-        // 🔵 Función para usar el mejor formato disponible
         const getURL = (img) => {
           if (!img) return null;
 
@@ -36,7 +39,6 @@ export default function ProjectPage({ params }) {
           return null;
         };
 
-        // 🖼️ Galería
         const images =
           attrs.projectImages?.data?.map((img) =>
             getURL(img.attributes)
@@ -49,6 +51,8 @@ export default function ProjectPage({ params }) {
           location: attrs.location || null,
           images,
         });
+
+        setTranslatedDescription(attrs.projectDescription);
       } catch (error) {
         console.error("❌ Error cargando proyecto:", error);
       }
@@ -57,24 +61,59 @@ export default function ProjectPage({ params }) {
     fetchProject();
   }, [slug]);
 
+  // 🔤 TRADUCCIÓN AUTOMÁTICA SOLO SI ES INGLÉS
+  useEffect(() => {
+    async function translateText() {
+      if (!project?.description) return;
+
+      if (language === "es") {
+        setTranslatedDescription(project.description);
+        return;
+      }
+
+      try {
+        const res = await fetch("https://libretranslate.de/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            q: project.description,
+            source: "es",
+            target: "en",
+            format: "text",
+          }),
+        });
+
+        const data = await res.json();
+        setTranslatedDescription(data.translatedText);
+      } catch (error) {
+        console.error("❌ Error traduciendo texto:", error);
+        setTranslatedDescription(project.description);
+      }
+    }
+
+    translateText();
+  }, [language, project]);
+
+  const t = {
+    es: { notFound: "Proyecto no encontrado." },
+    en: { notFound: "Project not found." },
+  };
+
   if (!project)
     return (
       <div className="p-10">
-        <h1 className="text-2xl font-bold">Proyecto no encontrado.</h1>
+        <h1 className="text-2xl font-bold">{t[language].notFound}</h1>
       </div>
     );
 
   return (
     <div className="px-10 py-20">
-      {/* 🏗️ TÍTULO */}
       <h1 className="text-4xl font-bold mb-4">{project.name}</h1>
 
-      {/* 📍 UBICACIÓN OPCIONAL */}
       {project.location && (
         <p className="text-gray-600 mb-4">📍 {project.location}</p>
       )}
 
-      {/* 🖼️ GALERÍA */}
       {project.images.length > 0 && (
         <div className="flex gap-4 overflow-x-auto mb-10">
           {project.images.map((img, i) => (
@@ -87,10 +126,13 @@ export default function ProjectPage({ params }) {
         </div>
       )}
 
-      {/* 📄 DESCRIPCIÓN */}
-      {project.description && (
-        <p className="text-lg leading-relaxed">{project.description}</p>
+      {translatedDescription && (
+        <p className="text-lg leading-relaxed">
+          {translatedDescription}
+        </p>
       )}
     </div>
   );
 }
+
+

@@ -68,3 +68,19 @@
 .logos-slider:active .logos-track {
   animation-play-state: paused;
 }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+ .client-logos-title {
+  font-size: 1.5rem;
+}
+
+.logos-track {
+  gap: 30px;                  /* 🔥 MÁS ESPACIO ENTRE LOGOS */
+  
+}
+
+.logo-box img {
+  height: 20px;               /* 🔥 MÁS PEQUEÑOS */
+}
+}

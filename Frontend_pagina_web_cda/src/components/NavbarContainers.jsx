@@ -45,10 +45,16 @@ export default function NavbarContainers() {
     fetchCategories();
   }, [fetchCategories]);
 
-  // ✅ useMemo SIEMPRE antes de cualquier return
+  // 🔵 Corrección de nombre: "Banos" → "Baños"
   const processedCategories = useMemo(() => {
     return categories.map((cat) => {
-      const nombre = cat.categoryName || "Sin nombre";
+      let nombre = cat.categoryName || "Sin nombre";
+
+      // 👉 Cambiar solo la palabra visual, no el slug
+      if (nombre.toLowerCase() === "banos") {
+        nombre = "Baños";
+      }
+
       const slug = cat.slug || nombre.toLowerCase().replace(/\s+/g, "-");
 
       const img =
@@ -65,7 +71,6 @@ export default function NavbarContainers() {
     });
   }, [categories, baseUrl]);
 
-  // ✅ Ahora los returns condicionales VAN DESPUÉS de los hooks
   if (loading)
     return (
       <p className="NavbarContainers-loading">
@@ -102,4 +107,3 @@ export default function NavbarContainers() {
     </nav>
   );
 }
-

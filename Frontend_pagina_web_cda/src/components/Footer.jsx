@@ -20,16 +20,12 @@ export default function Footer() {
       { name: "Proyectos / Mobiliario", slug: "proyectos-mobiliario" },
       { name: "Servicio logístico", slug: "servicio-logistico" },
       { name: "Blog", slug: "blog" },
-      { 
-        name: "Empresa B", 
-        external: true,
-        url: "https://www.sistemab.org/"
-      },
     ],
   }), []);
 
   return (
     <footer className="footer">
+
       <div className="footer-content">
 
         {/* --- COLUMNA 1 --- */}
@@ -47,30 +43,27 @@ export default function Footer() {
 
         {/* --- COLUMNA 2 --- */}
         <div className="footer-column">
-          {categoriesRight.map((cat) =>
-            cat.external ? (
-              <a
-                key={cat.name}
-                href={cat.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                {cat.name}
-              </a>
-            ) : (
-              <Link
-                key={cat.slug}
-                href={`/categories/${cat.slug}`}
-                className="footer-link"
-              >
-                {cat.name}
-              </Link>
-            )
-          )}
+          {categoriesRight.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/categories/${cat.slug}`}
+              className="footer-link"
+            >
+              {cat.name}
+            </Link>
+          ))}
+
+          <a
+            href="https://www.bcorporation.net/en-us/find-a-b-corp/company/contenedores-de-antioquia/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            Empresa B
+          </a>
         </div>
 
-        {/* --- INFORMACIÓN CORPORATIVA --- */}
+        {/* --- COLUMNA 3 --- */}
         <div className="footer-column">
           <h4>Visítanos</h4>
           <p className="direction">
@@ -81,7 +74,7 @@ export default function Footer() {
 
           <Link
             className="location"
-            href="https://www.google.com/maps/place/Contenedores+de+Antioquia/data=!4m2!3m1!1s0x0:0xc6b961b25831fa72?sa=X&ved=1t:2428&ictx=111"
+            href="https://www.google.com/maps/place/Contenedores+de+Antioquia"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -90,32 +83,55 @@ export default function Footer() {
 
           <h4>Escríbenos</h4>
 
-          {/* ✅ CORREO ACTIVADO PARA ABRIR APP DE EMAIL */}
-          <a 
+          <a
             className="email footer-link"
             href="mailto:comercial@contenedoresdeantioquia.com"
           >
-            Enviar un mail: comercial@contenedoresdeantioquia.com
+            comercial@contenedoresdeantioquia.com
           </a>
-            <div className="policy-liks">
-                <p className="policy">Política Tratamiento de Datos</p>
-                <p className="policy">Política Sistema de Gestión Integral</p>
-            </div>
+
+          <p className="policy">Política Tratamiento de Datos</p>
+          <p className="policy">Política Sistema de Gestión Integral</p>
         </div>
 
-        {/* --- LOGO EMPRESA B (Click lleva al link) --- */}
-        <div className="footer-bcorp">
-          <a 
-            href="https://www.sistemab.org/" 
-            target="_blank" 
+        {/* --- COLUMNA 4 (EMPRESA B + REDES) --- */}
+        <div className="footer-column footer-bcorp">
+          <a
+            href="https://www.bcorporation.net/en-us/find-a-b-corp/company/contenedores-de-antioquia/"
+            target="_blank"
             rel="noopener noreferrer"
           >
-            <img 
-              src="/img/Logo-Empresa-B-01.png" 
+            <img
+              src="/img/Logo-Empresa-B-01.png"
               alt="Empresa B"
               loading="lazy"
             />
           </a>
+
+          <div className="footer-socials">
+            <a href="https://www.instagram.com/contenedores_ant/" target="_blank">
+              <img src="/img/Instagram-Contenedores-de-Antioquia.png" alt="Instagram" />
+            </a>
+
+            <a href="https://linkedin.com/company/contenedoresdeantioquia?originalSubdomain=co" target="_blank">
+              <img src="/img/Linkedin-Contenedores-de-Antioquia.png" alt="LinkedIn" />
+            </a>
+
+            <a href="https://www.facebook.com/ContenedoresdeAntioquia/?locale=es_LA" target="_blank">
+              <img src="/img/Facebook-Contenedores-de-Antioquia.png" alt="Facebook" />
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCIIrJuxjUPfITWhT8HzrZjA" target="_blank">
+              <img src="/img/Youtube-Contenedores-de-Antioquia.png" alt="YouTube" />
+            </a>
+
+            <a
+              href="https://wa.me/573158246718?text=Hola,%20quiero%20una%20asesor%C3%ADa%20gratuita."
+              target="_blank"
+            >
+              <img src="/img/Whatsapp-Contenedores-de-Antioquia.png" alt="WhatsApp" />
+            </a>
+          </div>
         </div>
 
       </div>
@@ -133,9 +149,9 @@ export default function Footer() {
 
       {/* --- COPYRIGHT --- */}
       <div className="footer-copy">
-        Copyright © 2026 Contenedores de Antioquia.
-        Todos los derechos reservados.
+        © 2026 Contenedores de Antioquia. Todos los derechos reservados.
       </div>
+
     </footer>
   );
 }

@@ -3,108 +3,125 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 import "./navbar.css";
 
 export default function Navbar() {
+  const { language, setLanguage } = useLanguage();
+  const router = useRouter();
+
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [language, setLanguage] = useState("es");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // ⚡ Menú memorizado para no recrearlo en cada render
+  const t = {
+    es: {
+      home: "Inicio",
+      designs: "Diseños estándar",
+      projects: "Proyectos",
+      furniture: "Mobiliario",
+      blog: "Blog",
+      workWithUs: "Trabaja con nosotros",
+      ctaTitle: "Asesoría gratis",
+      ctaSubtitle: "El contenedor perfecto para tu proyecto",
+      search: "Buscar...",
+    },
+    en: {
+      home: "Home",
+      designs: "Standard designs",
+      projects: "Projects",
+      furniture: "Furniture",
+      blog: "Blog",
+      workWithUs: "Work with us",
+      ctaTitle: "Free consultation",
+      ctaSubtitle: "The perfect container for your project",
+      search: "Search...",
+    },
+  }[language];
+
   const menuLinks = useMemo(
     () => [
-      { href: "/", label: "Inicio" },
-      { href: "/containers/categories/bodegas", label: "Diseños estándar" },
-      { href: "/proyects", label: "Proyectos" },
-      { href: "/mobiliario/puesto-de-trabajo", label: "Mobiliario" },
-      { href: "/blog", label: "Blog" },
+      { href: "/", label: t.home },
+      { href: "/categories/bodegas/contenedor-de-10-pies", label: t.designs },
+      { href: "/categories/proyectos", label: t.projects },
+      { href: "/categories/mobiliario", label: t.furniture },
+      { href: "/blog", label: t.blog },
+      { href: "/workWithUs", label: t.workWithUs },
     ],
-    []
+    [t]
   );
 
-  // ⚡ Scroll optimizado
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // ⚡ Callbacks memorizados
-  const toggleSearch = useCallback(() => {
-    setSearchOpen((prev) => !prev);
-  }, []);
-
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => !prev);
   }, []);
 
   const handleSearch = useCallback(
     (e) => {
       e.preventDefault();
-      if (query.trim()) console.log("Buscando:", query);
+      if (!query.trim()) return;
+      setSearchOpen(false);
+      setMenuOpen(false);
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+      setQuery("");
     },
-    [query]
+    [query, router]
   );
 
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbarTop">
 
-        {/* LOGO (optimizado con priority solo en desktop) */}
         <div className="leftGroup">
-          <Image
-            src="/img/Versión-horizontal-Contenedores-de-Antioquia.png"
-            alt="Logo Contenedores de Antioquia"
-            width={180}
-            height={80}
-            className="logoDesktop"
-            priority
-          />
-          <Image
-            src="/img/Versión-vertical-Contenedores-de-Antioquia.png"
-            alt="Logo Contenedores de Antioquia"
-            width={70}
-            height={70}
-            className="logoMobile"
-          />
+          <Link href="/" aria-label={t.home}>
+            <Image
+              src="/img/Versión-horizontal-Contenedores-de-Antioquia.png"
+              alt="Contenedores de Antioquia"
+              width={180}
+              height={80}
+              className="logoDesktop"
+              priority
+            />
+          </Link>
         </div>
 
-        {/* MENÚ */}
         <nav className={`navMenu ${menuOpen ? "active" : ""}`}>
           <ul>
             {menuLinks.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
+              <li key={item.label}>
+                <Link href={item.href} onClick={() => setMenuOpen(false)}>
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* LUPA */}
-        <button className="searchIcon" onClick={toggleSearch}>
-          <Image
-            src="/img/Lupa-Blanca.png"
-            alt="Buscar"
-            width={18}
-            height={20}
-          />
+        <button
+          className="searchIcon"
+          onClick={() => {
+            setSearchOpen((prev) => !prev);
+            setMenuOpen(false);
+          }}
+          aria-label="Buscar"
+        >
+          <Image src="/img/Lupa-Blanca.png" alt="Buscar" width={18} height={20} />
         </button>
 
         {/* CTA */}
         <a
-          href="https://wa.me/573158246718?text=Hola!%20Quiero%20más%20información."
+          href="https://wa.me/573158246718?text=Hola,%20quiero%20una%20asesoría%20gratuita"
           target="_blank"
           rel="noopener noreferrer"
-          className="mensajeCta no-underline text-inherit"
+          className="mensajeCta"
         >
-          <h4 className="asesoriaGratuita">Asesoría gratis</h4>
-          <h5 className="textCta">El contenedor perfecto para tu proyecto</h5>
+          <h4 className="asesoriaGratuita">{t.ctaTitle}</h4>
+          <h5 className="textCta">{t.ctaSubtitle}</h5>
         </a>
 
-        {/* IDIOMA */}
         <select
           className="languageSelectNavbar"
           value={language}
@@ -114,26 +131,30 @@ export default function Navbar() {
           <option value="en">EN</option>
         </select>
 
-        {/* HAMBURGUESA */}
-        <button className="menuToggle" onClick={toggleMenu}>
+        <button
+          className="menuToggle"
+          onClick={() => {
+            setMenuOpen((prev) => !prev);
+            setSearchOpen(false);
+          }}
+          aria-label="Menú"
+        >
           {menuOpen ? "✖" : "☰"}
         </button>
-
       </div>
 
-      {/* BUSCADOR */}
       {searchOpen && (
         <form className="searchBarExpanded" onSubmit={handleSearch}>
           <input
             type="text"
-            placeholder="Buscar..."
+            placeholder={t.search}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            autoFocus
           />
           <button type="submit">Buscar</button>
         </form>
       )}
-
     </header>
   );
 }

@@ -1,0 +1,147 @@
+.work-with-us {
+  padding: 80px 20px;
+  background: #f7f7f7;
+}
+
+.work-with-us__container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.work-with-us h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.work-with-us__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #000;
+}
+
+.file-group input {
+  display: none;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 12px;
+  background: #003B29;
+  color: #fff;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #444;
+}
+
+.form-check input {
+  margin-top: 4px;
+}
+
+.form-check a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  padding: 14px;
+  background: #003B29;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: #b00020;
+  font-size: 14px;
+}
+
+.form-success {
+  color: #0a7a3d;
+  font-size: 14px;
+}
+
+/* BOTÓN WHATSAPP */
+.whatsapp-btn {
+  margin-top: 10px;
+  padding: 14px;
+  background: #003B29;
+  color: #ffffff;
+  border-radius: 30px;
+  font-size: 15px;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.whatsapp-btn:hover {
+  background: #85C598;
+}
+
+/* ICONO WHATSAPP */
+.whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .work-with-us__container {
+    padding: 25px;
+  }
+}

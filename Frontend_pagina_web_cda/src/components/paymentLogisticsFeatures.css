@@ -1,0 +1,132 @@
+/* 🔒 FIX GLOBAL (evita desbordes laterales) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* -------------------------  
+   SECCIÓN
+-------------------------- */
+.featuresSection { 
+  width: 100%;
+  padding: 80px 20px;
+  background: #e8e8e8;
+  overflow-x: hidden; /* 🔒 evita scroll lateral */
+}
+
+/* -------------------------
+   GRID
+-------------------------- */
+.featuresGrid {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  text-align: center;
+
+  /* 🔥 Escala visual SOLO en desktop */
+  transform: scale(0.94);
+  transform-origin: center;
+}
+
+/* -------------------------
+   ITEM
+-------------------------- */
+.featureItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* 🔥 LÍNEA DIVISORA */
+.featureItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 15%;
+  height: 60%;
+  width: 1.5px;
+  background-color: #003B29;
+  opacity: 0.6;
+}
+
+/* -------------------------
+   CONTENIDO
+-------------------------- */
+.featureIcon {
+  width: 40%;
+  height: auto;
+}
+
+.featureItem h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #003B29;
+  margin-bottom: 1px;
+  letter-spacing: 0.3px;
+}
+
+.featureItem p {
+  font-size: 14.8px;
+  line-height: 1.2;
+  color: #003B29;
+  max-width: 320px;
+  letter-spacing: 0.5px;
+}
+
+/* -------------------------
+   TABLET
+-------------------------- */
+@media (max-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    transform: none;
+  }
+
+  .featureItem::after {
+    display: none;
+  }
+}
+
+/* -------------------------
+   MOBILE
+-------------------------- */
+@media (max-width: 600px) {
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 70px;
+
+    transform: none;
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .featuresSection {
+    padding: 50px 16px;
+  }
+
+  .featureItem {
+    align-items: center;
+  }
+
+  .featureItem p {
+    max-width: 100%; /* ✅ sin desplazamiento */
+    font-size: 14px;
+    line-height: 1.3;
+    margin: 0 auto;
+  }
+
+  .featureIcon {
+    width: 45%;
+  }
+
+  .featureItem::after {
+    display: none;
+  }
+}

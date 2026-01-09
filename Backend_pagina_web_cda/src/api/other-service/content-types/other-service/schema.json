@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "other_services",
+  "info": {
+    "singularName": "other-service",
+    "pluralName": "other-services",
+    "displayName": "otherService"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "textDescripion": {
+      "type": "text"
+    }
+  }
+}
